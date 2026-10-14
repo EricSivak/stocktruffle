@@ -1,0 +1,7 @@
+# Text files use LF everywhere, also on Windows checkouts (Prettier, Python and the
+# Supabase CLI all write LF). Images stay untouched.
+* text=auto eol=lf
+*.png binary
+*.webp binary
+*.jpg binary
+*.woff2 binary
