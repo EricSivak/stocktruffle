@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "cmd",
+      "args": ["/c", "npx", "--no-install", "shadcn", "mcp", "--cwd", "apps/web"]
+    },
+    "21st": {
+      "type": "http",
+      "url": "https://21st.dev/api/mcp",
+      "headers": {
+        "x-api-key": "${API_KEY_21ST}"
+      }
+    }
+  }
+}

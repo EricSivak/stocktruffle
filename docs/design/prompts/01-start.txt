@@ -1,0 +1,31 @@
+High-fidelity screenshot of a desktop web app, flat and straight-on, the full browser viewport without browser chrome, device frame or background scene. Landscape 1536x1024.
+
+PRODUCT: "stocktruffle", a stock research app for serious private investors in Germany. You describe in plain language which stocks you are looking for, and the app finds them. This is the start page; it should be as quiet as the Google home page.
+
+LOOK: a real screenshot of a mature, professional desktop product that investors use every day: calm, precise, information first, in the spirit of Linear and the Financial Times markets pages. It must not look like a Dribbble concept shot, a landing page or a generic AI-generated app.
+
+COLORS (light theme): page background warm paper #F5F1EA. Text ink #1D1915, secondary text #6B6157, inactive gray #8F8378, hairlines #E2D9CC. Input fields use #FBF8F3 with a 1 px border #D8CDBE. Gains moss green #2E7D4F and losses terracotta #B5432B, only on numbers that show change. Truffle gold #B08337 appears only as the small dot in the logo. No other colors anywhere.
+
+TYPE: a sober neo-grotesk sans (like Söhne or Inter) for all interface text and every number. UI text 13 px, small text 12 px, tabular figures, sentence case, never letter-spaced capitals. Nothing larger than 30 px.
+
+SHAPES: flat. Everything sits directly on the paper, structured by alignment, whitespace and 1 px hairlines. No cards, no boxes, no drop shadows. Inputs have 6 px corners. Thin 1.5 px line icons only where an icon replaces a word.
+
+STRICTLY AVOID: eyebrow labels (small letter-spaced capitals above headings), colored labels, big headline questions, suggestion chips or pills, boxed cards, status pills with colored dots, decorative lines, textures or squiggles, keyboard-shortcut bars, round buttons, gradients, drop shadows, emoji, sparkle icons, glassmorphism, 3D.
+
+LEFT NAVIGATION RAIL: 64 px wide, same paper background, separated from the content by a 1 px hairline. At the top the logo mark, 32 px: an organic, slightly irregular truffle-shaped blob in deep truffle brown #2A211B containing a cream lowercase serif "t" whose crossbar steps upward like a tiny staircase, with a small gold dot #B08337 at the top step. Below it four navigation items, each a thin line icon with a tiny 11 px label underneath: "Suche", "Screens", "Tracking", "Signale". The active item "Suche" is ink colored on a square background #ECE5DA with 6 px corners; inactive items are gray #8F8378. At the bottom a thin moon icon and a small round avatar with the letter "E" on #ECE5DA.
+
+TOP RIGHT of the content area: plain gray 12 px text, no pill and no dot: "Xetra offen · 14:32".
+
+CENTER, beginning about one third from the top, horizontally centered:
+1. The horizontal logo lockup, about 40 px tall: the logo mark, then the wordmark "stocktruffle" as one word, "stock" in the sans in medium weight and "truffle" in a serif italic, both ink.
+2. 28 px below: a search field, 640 px wide and 46 px tall, fill #FBF8F3, 1 px border #D8CDBE, 6 px corners, no shadow. Inside: a thin magnifier icon on the left and the gray placeholder "Beschreib, wonach du suchst". Nothing else inside the field.
+3. 14 px below, left-aligned with the field: three example queries as plain gray 13 px text lines, no boxes, no labels, no icons: "Profitable Small Caps in Europa, KGV unter 15", "Wie ASML, nur kleiner und günstiger", "Warum fällt Rheinmetall heute?".
+
+BRIEFING, 56 px below the examples, same 640 px width and left edge, no box: a 1 px hairline, then the heading "Seit gestern" in the sans, 13 px, medium weight, ink. Below it three rows of 13 px text separated by hairlines, the main text on the left in ink and a detail right-aligned:
+- "Nordwind Technik" with "−5,8 %" in terracotta
+- "3 neue Titel in Europa Small Caps" with "seit 17:35" in gray
+- "Altmeer Mesure meldet Quartalszahlen" with "morgen" in gray
+
+BOTTOM of the content area: one line of market data in 12 px, with a 1 px hairline above it, evenly spaced; name gray, value ink, change in moss or terracotta: "DAX 19.482 +0,6 %", "Euro Stoxx 50 4.981 +0,4 %", "S&P 500 5.812 −0,2 %", "Nasdaq 100 20.344 −0,5 %", "EUR/USD 1,0912 +0,1 %".
+
+Everything else stays empty paper. Render every text exactly as written, crisp and legible.

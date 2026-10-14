@@ -1,0 +1,33 @@
+High-fidelity screenshot of a desktop web app, flat and straight-on, the full browser viewport without browser chrome, device frame or background scene. Landscape 1536x1024. DARK THEME.
+
+PRODUCT: "stocktruffle", a stock screener and research app for serious private investors in Germany. This is the screen results page in its dark theme: warm and deep like the skin of a black truffle, never cold blue-black.
+
+LOOK: a real screenshot of a mature, professional desktop product that investors use every day: calm, dense, precise, information first, in the spirit of Linear. It must not look like a Dribbble concept shot or a generic AI-generated app.
+
+COLORS (dark theme): page background warm truffle black #12100E. Text #F3EDE4, secondary text #A89C90, inactive gray #74685E, hairlines #2F2823. Input fields and the table sheet use #171411 with a 1 px border #3A322B. The selected row uses #201B17. Gains moss green #63C08A and losses terracotta #E0705A, only on numbers and lines that show change. Truffle gold #D6A85C appears in exactly two places: the small dot in the logo and a 2 px marker on the selected table row. No other colors anywhere, no blue tones, no glow.
+
+TYPE: a sober neo-grotesk sans (like Söhne or Inter) for all interface text, labels, buttons and every number. UI text 13 px, small text 12 px, tabular figures, numbers right-aligned in tables, sentence case, never letter-spaced capitals. A text serif (like Tiempos) is used only for the page title at 24 px regular weight. Never use the serif for numbers.
+
+SHAPES: flat. The results table is the only element on a sheet: fill #171411, 1 px border #3A322B, 8 px corners, no shadow, nothing boxed inside it. Buttons and inputs have 6 px corners. Exactly one filled primary button with a paper-colored fill #F3EDE4 and ink text #1D1915; all other actions are plain text buttons without icons.
+
+STRICTLY AVOID: eyebrow labels (small letter-spaced capitals above headings), colored or gold labels, big KPI number blocks, initials avatars or colored circles for companies, gradient or area fills under lines, pill-shaped chips, dropdown arrows on filters, floating buttons, keyboard-shortcut bars, status pills with colored dots, buttons that combine an icon with a label, drop shadows, neon glow, emoji, sparkle icons, glassmorphism, 3D.
+
+LEFT NAVIGATION RAIL: 64 px wide, same background #12100E, separated from the content by a 1 px hairline #2F2823. At the top the logo mark, 32 px: an organic, slightly irregular truffle-shaped blob in deep truffle brown with a thin cream outline so it stays visible, containing a cream lowercase serif "t" whose crossbar steps upward like a tiny staircase, with a small gold dot #D6A85C at the top step. Below it four navigation items, each a thin line icon with a tiny 11 px label underneath: "Suche", "Screens", "Tracking", "Signale". The active item "Screens" is in #F3EDE4 on a square background #201B17 with 6 px corners; inactive items are #74685E. At the bottom a thin sun icon and a small round avatar with the letter "E" on #201B17.
+
+CONTENT AREA (28 px padding):
+1. Header line: the page title "Europa Small Caps" in the serif, 24 px, regular, #F3EDE4. On the same baseline in gray 12 px sans: "Gespeicherter Screen · 17:35". On the far right: two plain text buttons without icons or borders, "Agent" and "Exportieren", then the one primary button, 28 px tall, "Speichern".
+2. 16 px below: the query field, full width, 38 px tall, fill #171411, 1 px border #3A322B, 6 px corners, thin magnifier icon, containing "Profitable Small Caps in Europa, KGV unter 15".
+3. 10 px below: compact filter tokens, each 24 px tall, transparent fill, 1 px border #3A322B, 6 px corners, 12 px text with the field name in gray and the value in #F3EDE4, no arrows and no icons: "Region Europa", "Marktkap. 0,3–2 Mrd €", "KGV < 15", "Nettomarge > 0 %", "Sektor ohne Finanzwerte", "Meine Regeln"; then a plain gray text button "+ Filter".
+4. 20 px below: one line of gray 12 px meta text: "47 Treffer · Ø KGV 11,2 · Ø Umsatzwachstum +13,9 % · Median Marktkap. 1,1 Mrd €", with "+13,9 %" in moss.
+5. 10 px below: the results table on its sheet. Header row in gray 12 px medium weight, sentence case: "Unternehmen", "Kurs", "Heute", "Marktkap.", "KGV", "Umsatz Δ ↓" (light, the sorted column), "Nettomarge", "1 Jahr". Rows 38 px tall with 1 px hairlines #2F2823. Company name in #F3EDE4, 13 px, followed on the same line by the ticker in gray, 12 px. Last column: a 64 px sparkline as a single 1 px line in moss or terracotta, no fill. Rows:
+   Solberg Marine SBG.ST | 118,40 SEK | +1,2 % | 1,7 Mrd € | 13,1 | +21,0 % | 9,4 %
+   Nordwind Technik NWT.DE | 42,18 € | −5,8 % | 1,2 Mrd € | 11,4 | +18,2 % | 8,1 % — selected: background #201B17 and a 2 px gold marker on its left edge
+   Altmeer Mesure ALM.PA | 63,25 € | +0,4 % | 1,4 Mrd € | 12,6 | +15,7 % | 11,2 %
+   Helvoort Industries HLV.AS | 27,90 € | +2,1 % | 900 Mio € | 9,8 | +12,5 % | 6,7 %
+   Brenner Kabel BRN.VI | 15,02 € | −0,9 % | 600 Mio € | 10,2 | +11,1 % | 5,8 %
+   Corvara Sistemi CRV.MI | 8,64 € | 0,0 % | 400 Mio € | 7,9 | +10,3 % | 4,9 %
+   Vindmark VDM.CO | 212,00 DKK | +1,6 % | 800 Mio € | 14,2 | +9,6 % | 12,3 %
+   Torres Envases TRS.MC | 19,76 € | −0,3 % | 1,1 Mrd € | 12,9 | +8,8 % | 7,2 %
+   Values in "Heute" and "Umsatz Δ" are moss when positive, terracotta when negative, gray at 0,0 %. All other numbers are #F3EDE4.
+
+Render every text exactly as written, crisp and legible, especially every number in the table.

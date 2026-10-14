@@ -1,0 +1,41 @@
+High-fidelity screenshot of a desktop web app, flat and straight-on, the full browser viewport without browser chrome, device frame or background scene. Landscape 1536x1024.
+
+PRODUCT: "stocktruffle", a stock research app for serious private investors in Germany. This screen shows the agent's research mode: it screened stocks as a tool and searched the web, and now presents a sourced answer that reads like a short analyst note.
+
+LOOK: a real screenshot of a mature, professional desktop product: calm, precise, information first, in the spirit of Linear and the Financial Times. It must not look like a Dribbble concept shot, a chat app clone or a generic AI-generated app.
+
+COLORS (light theme): page background warm paper #F5F1EA. Text ink #1D1915, secondary text #6B6157, inactive gray #8F8378, hairlines #E2D9CC. Input fields use #FBF8F3 with a 1 px border #D8CDBE. Gains moss green #2E7D4F, losses terracotta #B5432B, only on numbers that show change. Truffle gold #B08337 appears only as the small dot in the logo. No other colors anywhere.
+
+TYPE: a sober neo-grotesk sans (like Söhne or Inter) for all interface text, labels, buttons and every number. UI text 13 px, small text 12 px, tabular figures, sentence case, never letter-spaced capitals. A text serif (like Tiempos) is used only for the page title at 24 px regular weight and for the agent's written answer. Never use the serif for numbers.
+
+SHAPES: flat. No cards, no boxes, no tinted callouts, no drop shadows. Structure comes from alignment, whitespace and 1 px hairlines. Buttons and inputs have 6 px corners. Exactly one filled primary button; all other actions are plain text buttons or links without icons.
+
+STRICTLY AVOID: eyebrow labels (small letter-spaced capitals above headings), colored or gold labels, chat bubbles, round buttons, check-mark step lists, initials avatars or colored circles for companies, colored icon tiles or favicons, logos of real or fake publications, info icons, tinted boxes, pill-shaped toggles, gradient fills, buttons that combine an icon with a label, emoji, sparkle icons, glassmorphism, 3D.
+
+LEFT NAVIGATION RAIL: 64 px wide, same paper background, separated from the content by a 1 px hairline. At the top the logo mark, 32 px: an organic, slightly irregular truffle-shaped blob in deep truffle brown #2A211B containing a cream lowercase serif "t" whose crossbar steps upward like a tiny staircase, with a small gold dot #B08337 at the top step. Below it four navigation items, each a thin line icon with a tiny 11 px label underneath: "Suche", "Screens", "Tracking", "Signale". The active item "Suche" is ink colored on a square background #ECE5DA with 6 px corners; inactive items are gray #8F8378. At the bottom a thin moon icon and a small round avatar with the letter "E" on #ECE5DA.
+
+LAYOUT: a reading column 720 px wide, starting 48 px after the rail, and a sources column 280 px wide at the right edge, separated by a 1 px hairline.
+
+READING COLUMN, top to bottom:
+1. Title line: "Rüstungszulieferer unter 2 Mrd €" in the serif, 24 px, regular. Below it in gray 12 px: "Recherche · abgeschlossen · 23 Quellen · 1 Min 40". At the right end of the title line: a plain ink text button "Als Screen öffnen" and the one primary button, 28 px tall, ink fill, paper-colored text "Als Memo speichern".
+2. 24 px below: the question in the sans, 14 px, ink, with a 2 px gray bar on its left: "Welche europäischen Rüstungszulieferer unter 2 Mrd € profitieren am stärksten von höheren Verteidigungsetats?"
+3. 12 px below: one gray 12 px line: "31 Titel gescreent · 8 recherchiert · 4 ausgewählt · Schritte anzeigen", with "Schritte anzeigen" underlined.
+4. 20 px below: the answer in the text serif. A subheading, 18 px: "Vier Titel stechen heraus". Then a paragraph, 15 px, relaxed line height: "Alle vier erzielen mehr als die Hälfte ihres Umsatzes mit Verteidigung und haben Aufträge für mehr als zwei Jahre im Bestand.¹ Am klarsten ist das Bild bei Halvard Systems, wo zwei Rahmenverträge bis 2030 laufen.² Brixen Optik ist am kleinsten, wächst aber am schnellsten.³" The footnote numbers are small gray superscripts.
+5. 20 px below: a compact table directly on the paper, no box. Header in gray 12 px medium weight, sentence case: "Unternehmen", "Marktkap.", "Rüstungsanteil", "Auftragsbestand", "Seit Jahresbeginn". Rows 36 px with 1 px hairlines. Company name in ink with the ticker in gray on the same line. The "Rüstungsanteil" cell shows the percentage and next to it a thin 2 px bar, 60 px long, filled proportionally in ink on a #E2D9CC track. "Seit Jahresbeginn" in moss.
+   Halvard Systems HVS.OL | 1,4 Mrd € | 82 % | 2,6 × Umsatz | +34,2 %
+   Ostmark Avionik OMA.DE | 0,9 Mrd € | 64 % | 2,2 × Umsatz | +18,9 %
+   Brixen Optik BXO.MI | 0,5 Mrd € | 71 % | 2,1 × Umsatz | +41,0 %
+   Teralis TRL.PA | 1,8 Mrd € | 58 % | 2,0 × Umsatz | +12,4 %
+6. 10 px below the table: two underlined ink text links, "Alle tracken" and "In Memo übernehmen".
+7. 20 px below: one 13 px line: "Nicht belegt:" in ink medium weight, followed in gray by "Für 2 Titel gab es keine belastbaren Angaben zum Auftragsbestand." No box, no icon, no tint.
+8. At the bottom of the reading column: one input field, 38 px tall, fill #FBF8F3, 1 px border #D8CDBE, 6 px corners, gray placeholder "Nachfragen". Inside on the right: the ink 12 px text "Recherche an" and a thin arrow icon.
+
+SOURCES COLUMN: the heading "Quellen" in the sans, 13 px, medium, ink, followed by "23" in gray. Then a numbered list in 12 px, each item on two lines, title in ink and type in gray, separated by hairlines, no icons and no tiles:
+   1 Halvard Systems: Geschäftsbericht 2025 / Unternehmensbericht, PDF
+   2 Rahmenverträge der Streitkräfte 2026 / Fachpresse, 12.09.2026
+   3 Brixen Optik: Quartalsbericht Q2 / Unternehmensbericht
+   4 Verteidigungsetats in Europa / Analyse, 03.10.2026
+   5 Ostmark Avionik: Investorenpräsentation / PDF
+   and below the list a gray underlined link "Alle 23 Quellen".
+
+It should read like a premium research memo. Render every text exactly as written, crisp and legible.

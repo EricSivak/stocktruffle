@@ -1,0 +1,32 @@
+High-fidelity screenshot of a desktop web app, flat and straight-on, the full browser viewport without browser chrome, device frame or background scene. Landscape 1536x1024.
+
+PRODUCT: "stocktruffle", a stock research app for serious private investors in Germany. This is the tracking page: stocks the user watches, each with the reason why ("These") and signals written in plain language, such as "interesting when mortgage rates fall". Signals are stored but not yet checked automatically.
+
+LOOK: a real screenshot of a mature, professional desktop product that investors use every day: calm, dense, precise, information first, in the spirit of Linear and the Financial Times markets pages. It must not look like a Dribbble concept shot or a generic AI-generated app.
+
+COLORS (light theme): page background warm paper #F5F1EA. Text ink #1D1915, secondary text #6B6157, inactive gray #8F8378, hairlines #E2D9CC. The table sheet and input fields use #FBF8F3 with a 1 px border #D8CDBE; the expanded row uses #ECE5DA. Gains moss green #2E7D4F and losses terracotta #B5432B, only on numbers that show change. Truffle gold #B08337 appears only as the small dot in the logo. No other colors anywhere.
+
+TYPE: a sober neo-grotesk sans (like Söhne or Inter) for all interface text, labels and every number. UI text 13 px, small text 12 px, tabular figures, sentence case, never letter-spaced capitals. A text serif (like Tiempos) is used only for the page title at 24 px regular weight and for the investment theses. Never use the serif for numbers.
+
+SHAPES: flat. The table is the only element on a sheet: fill #FBF8F3, 1 px border #D8CDBE, 8 px corners, no shadow, nothing boxed inside it. Inputs have 6 px corners. No primary button on this screen; actions are plain text buttons or links without icons.
+
+STRICTLY AVOID: eyebrow labels (small letter-spaced capitals above headings), colored or gold labels, initials avatars or colored circles, status pills or badges, dashed outlines, count bubbles, segmented controls with boxed buttons, suggestion chips, info icons, buttons that combine an icon with a label, gradients, drop shadows, emoji, sparkle icons, glassmorphism, 3D.
+
+LEFT NAVIGATION RAIL: 64 px wide, same paper background, separated from the content by a 1 px hairline. At the top the logo mark, 32 px: an organic, slightly irregular truffle-shaped blob in deep truffle brown #2A211B containing a cream lowercase serif "t" whose crossbar steps upward like a tiny staircase, with a small gold dot #B08337 at the top step. Below it four navigation items, each a thin line icon with a tiny 11 px label underneath: "Suche", "Screens", "Tracking", "Signale". The active item "Tracking" is ink colored on a square background #ECE5DA with 6 px corners; inactive items are gray #8F8378. At the bottom a thin moon icon and a small round avatar with the letter "E" on #ECE5DA.
+
+CONTENT AREA, max 1120 px wide, 32 px padding:
+1. Title line: "Tracking" in the serif, 24 px, regular; on the same baseline in gray 12 px sans: "5 Titel · 4 Signale". On the right a plain text switch in 13 px: "Nach Aktie" in ink with a 1 px ink underline, then "Nach Signal" and "Archiv" in gray.
+2. 20 px below: the table on its sheet. Header in gray 12 px medium weight, sentence case: "Unternehmen", "Kurs", "Seit Tracking", "Getrackt am", "These", "Signale". Rows 38 px with 1 px hairlines. A thin chevron at the far left of each row, then the company name in ink with the ticker in gray on the same line. The "These" column shows the start of the thesis in gray serif italic, cut off with an ellipsis. "Signale" shows a plain number.
+   Nordwind Technik NWT.DE | 42,18 € | +6,4 % | 02.09.2026 | "Günstig, weil ein Großauftrag 2027 …" | 1
+   Hausberg Wohnbau HBG.DE | 18,30 € | −3,1 % | 21.08.2026 | "Günstig bewertet, aber der Neubau …" | 2 — this row is expanded: chevron pointing down, row and detail background #ECE5DA
+   EXPANDED DETAIL directly below that row, same background, indented to the company name, three label and content pairs with the labels in gray 12 px in a narrow left column:
+     "These": in the serif, 15 px, ink: "Günstig bewertet, aber der Neubau hängt an den Zinsen."
+     "Herkunft": gray 13 px: "Recherche „Bauträger nach der Zinswende“, 21.08.2026"
+     "Signale": two rows, the signal text in ink 13 px on the left and on the right in gray 12 px the rhythm and the state: "Interessant, wenn die Hypothekenzinsen sinken" with "wöchentlich · nicht aktiv"; "Auftragseingang dreht ins Plus" with "nach Quartalszahlen · nicht aktiv". Below them an input field, 32 px tall, fill #FBF8F3, 1 px border #D8CDBE, 6 px corners, gray placeholder "Interessant, wenn …", and to its right in gray 12 px "Vorschläge:" followed by two underlined ink links "Baugenehmigungen steigen" and "Insiderkäufe".
+   Solberg Marine SBG.ST | 118,40 SEK | +12,9 % | 14.07.2026 | gray "Noch kein Grund notiert" | 0
+   Altmeer Mesure ALM.PA | 63,25 € | +1,2 % | 30.09.2026 | "Messtechnik für Windparks, hohe Marge." | 1
+   Lakso Paper LKS.HE | 31,40 € | −0,8 % | 01.10.2026 | gray "Noch kein Grund notiert" | 0
+   Change values are moss when positive and terracotta when negative.
+3. Below the table, gray 12 px: "Signale werden gespeichert, aber noch nicht geprüft."
+
+Render every text exactly as written, crisp and legible.

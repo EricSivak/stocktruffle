@@ -1,0 +1,12 @@
+Create a set of app icons for "stocktruffle", a stock research app. Square 1024x1024 presentation on warm paper #F5F1EA, flat vector artwork, arranged in a 2x2 grid with generous spacing and thin hairline frames #E2D9CC.
+
+THE MARK: an organic, slightly irregular truffle-shaped blob (gently lumpy outline, not a perfect circle) in deep truffle brown #2A211B, containing a cream lowercase serif "t" whose crossbar steps upward like a tiny staircase, with a small truffle-gold dot #B08337 at the top step.
+
+1. Top left: a rounded-square app icon with macOS corner radius, paper background #F5F1EA, the mark centered at about 62 % of the icon size.
+2. Top right: the same icon on deep truffle black #12100E; the blob keeps its brown fill with a thin cream outline, the "t" stays cream, the dot is gold #D6A85C.
+3. Bottom left: favicons at 64, 32 and 16 px in a row; at 16 px the staircase simplifies to a plain "t" with the dot.
+4. Bottom right: one-color versions: the whole mark in ink #1D1915 on paper, and in cream #F3EDE4 on #12100E.
+
+Captions below each quadrant in 12 px sans, sentence case: "App-Icon hell", "App-Icon dunkel", "Favicon", "Einfarbig".
+
+RULES: crisp vector edges, no gradients, no drop shadows, no 3D, no photorealism, no mushrooms, no animals, no text besides the captions.

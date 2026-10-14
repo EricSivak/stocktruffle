@@ -1,0 +1,25 @@
+{
+  "name": "stocktruffle",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Aktien-Screener mit Recherche-Agent, lokal betrieben",
+  "scripts": {
+    "dev": "npm run db:start && concurrently --kill-others-on-fail --names engine,web --prefix-colors gray,white \"npm run dev:engine\" \"npm run dev:web\"",
+    "dev:web": "npm --prefix apps/web run dev",
+    "dev:engine": "uv run --directory apps/engine uvicorn engine.main:app --reload --reload-dir src --port 8000",
+    "env": "node scripts/sync-env.mjs",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:types": "supabase gen types typescript --local > apps/web/src/lib/database.types.ts",
+    "test": "npm run test:engine && npm run test:web",
+    "test:engine": "uv run --directory apps/engine pytest",
+    "test:web": "npm --prefix apps/web run test",
+    "typecheck": "npm --prefix apps/web run typecheck",
+    "lint": "npm --prefix apps/web run lint && uv run --directory apps/engine ruff check"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6",
+    "shadcn": "^4.21.4"
+  }
+}
