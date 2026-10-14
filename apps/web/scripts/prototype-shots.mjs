@@ -12,11 +12,23 @@ const BASE = "http://localhost:5173"
 const OUT = "../../docs/design/prototyp-v2"
 const VIEWPORT = { width: 1536, height: 1024 }
 
-// Pages and the mockup each one is compared with.
+// Pages and the mockup each one is compared with. `prepare` sets the page up like its mockup.
+const selectSecondRow = (view) => view.keyboard.press("j")
+const openHausberg = (view) => view.getByRole("row", { name: /Hausberg Wohnbau/ }).first().click()
+const blurSearch = (view) => view.evaluate(() => document.activeElement?.blur())
+
 const PAGES = [
-  { name: "02-screen-mit-agent", path: "/screens/europa-small-caps", agent: true, theme: "light", mockup: "02-screen-mit-agent.webp" },
-  { name: "06-screen-dunkel", path: "/screens/europa-small-caps", agent: false, theme: "dark", mockup: "06-screen-dunkel.webp" },
-  { name: "02-screen-dunkel-mit-agent", path: "/screens/europa-small-caps", agent: true, theme: "dark" },
+  { name: "01-start", path: "/", theme: "light", ready: "main form[role=search]", prepare: blurSearch, mockup: "01-start.webp" },
+  { name: "01-start-dunkel", path: "/", theme: "dark", ready: "main form[role=search]", prepare: blurSearch },
+  { name: "02-screen-mit-agent", path: "/screens/europa-small-caps", agent: true, theme: "light", prepare: selectSecondRow, mockup: "02-screen-mit-agent.webp" },
+  { name: "06-screen-dunkel", path: "/screens/europa-small-caps", agent: false, theme: "dark", prepare: selectSecondRow, mockup: "06-screen-dunkel.webp" },
+  { name: "02-screen-dunkel-mit-agent", path: "/screens/europa-small-caps", agent: true, theme: "dark", prepare: selectSecondRow },
+  { name: "03-recherche", path: "/recherche/demo", theme: "light", mockup: "03-recherche.webp" },
+  { name: "03-recherche-dunkel", path: "/recherche/demo", theme: "dark" },
+  { name: "04-aktie", path: "/aktie/NWT.DE", theme: "light", mockup: "04-aktie.webp" },
+  { name: "04-aktie-dunkel", path: "/aktie/NWT.DE", theme: "dark" },
+  { name: "05-tracking", path: "/tracking", theme: "light", prepare: openHausberg, mockup: "05-tracking.webp" },
+  { name: "05-tracking-dunkel", path: "/tracking", theme: "dark", prepare: openHausberg },
   { name: "styleguide", path: "/styleguide", agent: false, theme: "light", fullPage: true },
 ]
 
@@ -56,6 +68,7 @@ try {
   await page.getByLabel("Passwort").fill(password)
   await page.getByRole("button", { name: "Anmelden" }).click()
   await page.waitForURL(`${BASE}/`)
+  await page.locator("main form[role=search]").waitFor()
   const storageState = await login.storageState()
   await login.close()
 
@@ -69,13 +82,10 @@ try {
     view.on("console", (message) => message.type() === "error" && problems.push(`${shot.name}: ${message.text()}`))
     view.on("pageerror", (error) => problems.push(`${shot.name}: ${error.message}`))
     await view.goto(BASE + shot.path)
-    await view.locator("main h1").first().waitFor()
+    await view.locator(shot.ready ?? "main h1").first().waitFor()
     await view.evaluate(() => document.fonts.ready)
-    if (shot.path.startsWith("/screens")) {
-      // Select the second row as in the mockup.
-      await view.keyboard.press("j")
-    }
-    await view.waitForTimeout(400)
+    await shot.prepare?.(view)
+    await view.waitForTimeout(500)
     await view.screenshot({ path: join(OUT, `${shot.name}.png`), fullPage: shot.fullPage ?? false })
     await context.close()
   }

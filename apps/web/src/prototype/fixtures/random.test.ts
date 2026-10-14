@@ -22,3 +22,23 @@ describe("priceSeries", () => {
     expect(Math.min(...priceSeries(11, 5, 4, 500, 0.05))).toBeGreaterThan(0)
   })
 })
+
+describe("priceSeries with anchors", () => {
+  it("passes exactly through every anchor and still ends on the target", () => {
+    const anchors = [
+      { index: 60, value: 30 },
+      { index: 200, value: 50 },
+    ]
+    const series = priceSeries(5, 40, 42.18, 250, 0.018, anchors)
+    expect(series[60]).toBeCloseTo(30, 10)
+    expect(series[200]).toBeCloseTo(50, 10)
+    expect(series[0]).toBeCloseTo(40, 10)
+    expect(series.at(-1)).toBeCloseTo(42.18, 10)
+  })
+
+  it("leaves a series without anchors as it was", () => {
+    expect(priceSeries(3, 39.64, 42.18, 250, 0.018, [])).toEqual(
+      priceSeries(3, 39.64, 42.18, 250)
+    )
+  })
+})

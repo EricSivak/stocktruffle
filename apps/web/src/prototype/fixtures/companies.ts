@@ -1,7 +1,10 @@
 // Invented European small caps for the prototype. The first eight carry exactly the values
 // of the approved mockup (docs/design/mockups-v2/02-screen-mit-agent.webp); the rest are
-// generated so the screen has a realistic 47 hits. None of these companies exist.
-import { priceSeries, seeded } from "./random"
+// generated so the screen has a realistic 47 hits. A few more appear only in the tracking
+// and research mockups. None of these companies exist.
+import { ARCHIVED, TRACKED_SINCE, YEAR_START, YEAR_TO_DATE } from "./anchors"
+import { DAYS_PER_YEAR, yearIndex } from "./calendar"
+import { priceSeries, seeded, type Anchor } from "./random"
 
 export type Company = {
   symbol: string
@@ -24,8 +27,6 @@ export type Company = {
 }
 
 type Seed = Omit<Company, "year">
-
-const DAYS_PER_YEAR = 250
 
 const mockup: Seed[] = [
   {
@@ -276,18 +277,161 @@ function generated(count: number): Seed[] {
   return companies
 }
 
-export const companies: Company[] = [...mockup, ...generated(39)].map(
-  (company, index) => ({
-    ...company,
+/** Companies from the tracking and research mockups that are not in the screen. */
+const others: Seed[] = [
+  {
+    symbol: "HBG.DE",
+    name: "Hausberg Wohnbau",
+    country: "Deutschland",
+    exchange: "Xetra",
+    sector: "Immobilien",
+    currency: "EUR",
+    price: 18.3,
+    dayChange: -0.004,
+    marketCapEur: 0.7e9,
+    pe: 9.4,
+    revenueGrowth: -0.021,
+    netMargin: 0.062,
+    fcfYield: 0.054,
+    dividendYield: 0.041,
+    yearChange: -0.118,
+  },
+  {
+    symbol: "LKS.HE",
+    name: "Lakso Paper",
+    country: "Finnland",
+    exchange: "Helsinki",
+    sector: "Grundstoffe",
+    currency: "EUR",
+    price: 31.4,
+    dayChange: 0.003,
+    marketCapEur: 0.9e9,
+    pe: 12.1,
+    revenueGrowth: 0.034,
+    netMargin: 0.071,
+    fcfYield: 0.063,
+    dividendYield: 0.038,
+    yearChange: 0.052,
+  },
+  {
+    symbol: "HVS.OL",
+    name: "Halvard Systems",
+    country: "Norwegen",
+    exchange: "Oslo",
+    sector: "Industrie",
+    currency: "NOK",
+    price: 214.6,
+    dayChange: 0.014,
+    marketCapEur: 1.4e9,
+    pe: 18.4,
+    revenueGrowth: 0.226,
+    netMargin: 0.091,
+    fcfYield: 0.032,
+    dividendYield: 0.011,
+    yearChange: 0.412,
+  },
+  {
+    symbol: "OMA.DE",
+    name: "Ostmark Avionik",
+    country: "Deutschland",
+    exchange: "Xetra",
+    sector: "Industrie",
+    currency: "EUR",
+    price: 46.8,
+    dayChange: -0.007,
+    marketCapEur: 0.9e9,
+    pe: 16.2,
+    revenueGrowth: 0.174,
+    netMargin: 0.083,
+    fcfYield: 0.041,
+    dividendYield: null,
+    yearChange: 0.236,
+  },
+  {
+    symbol: "BXO.MI",
+    name: "Brixen Optik",
+    country: "Italien",
+    exchange: "Mailand",
+    sector: "Technologie",
+    currency: "EUR",
+    price: 12.36,
+    dayChange: 0.021,
+    marketCapEur: 0.5e9,
+    pe: 21.5,
+    revenueGrowth: 0.288,
+    netMargin: 0.064,
+    fcfYield: 0.022,
+    dividendYield: null,
+    yearChange: 0.547,
+  },
+  {
+    symbol: "TRL.PA",
+    name: "Teralis",
+    country: "Frankreich",
+    exchange: "Euronext Paris",
+    sector: "Industrie",
+    currency: "EUR",
+    price: 88.4,
+    dayChange: 0.005,
+    marketCapEur: 1.8e9,
+    pe: 14.8,
+    revenueGrowth: 0.121,
+    netMargin: 0.097,
+    fcfYield: 0.051,
+    dividendYield: 0.019,
+    yearChange: 0.168,
+  },
+]
+
+/** The closes a stock's year must pass through, so derived changes match the mockups. */
+function anchorsFor(seed: Seed): Anchor[] {
+  const at = (date: string, value: number) => ({
+    index: yearIndex(date),
+    value,
+  })
+  const anchors: Anchor[] = [
+    // Yesterday's close, so "today" on the stock page agrees with the series.
+    { index: DAYS_PER_YEAR - 2, value: seed.price / (1 + seed.dayChange) },
+  ]
+  for (const tracked of TRACKED_SINCE) {
+    if (tracked.symbol === seed.symbol)
+      anchors.push(at(tracked.date, seed.price / (1 + tracked.change)))
+  }
+  for (const entry of ARCHIVED) {
+    if (entry.symbol !== seed.symbol) continue
+    const atArchive = seed.price / (1 + entry.since)
+    anchors.push(at(entry.archivedAt, atArchive))
+    anchors.push(at(entry.trackedAt, atArchive / (1 + entry.during)))
+  }
+  const sinceNewYear = YEAR_TO_DATE[seed.symbol]
+  if (sinceNewYear !== undefined)
+    anchors.push(at(YEAR_START, seed.price / (1 + sinceNewYear)))
+  return anchors
+}
+
+function withYear(seed: Seed, index: number): Company {
+  return {
+    ...seed,
     year: priceSeries(
       index + 1,
-      company.price / (1 + company.yearChange),
-      company.price,
-      DAYS_PER_YEAR
+      seed.price / (1 + seed.yearChange),
+      seed.price,
+      DAYS_PER_YEAR,
+      0.018,
+      anchorsFor(seed)
     ),
-  })
-)
+  }
+}
+
+/** The 47 hits of the screen "Europa Small Caps". */
+export const companies: Company[] = [...mockup, ...generated(39)].map(withYear)
+
+/** Every company the prototype knows, screen or not. */
+export const allCompanies: Company[] = [
+  ...companies,
+  ...others.map((seed, index) => withYear(seed, companies.length + index)),
+]
 
 export function companyBySymbol(symbol: string): Company | undefined {
-  return companies.find((company) => company.symbol === symbol)
+  return allCompanies.find((company) => company.symbol === symbol)
 }

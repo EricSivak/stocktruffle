@@ -1,5 +1,6 @@
 // The agent's conversation reads like a document, not a chat: questions are lines with a
 // thin bar, work steps are one gray line, answers are prose with footnotes.
+import { useEffect, useRef } from "react"
 import { toast } from "sonner"
 import { cn } from "cn"
 
@@ -55,12 +56,31 @@ export function StepLine({
   )
 }
 
-function Footnote({ n, source }: { n: number; source?: Source }) {
+const SUP = "ml-px font-sans text-[10px] leading-none text-muted-foreground"
+
+function Footnote({
+  n,
+  source,
+  onSelect,
+}: {
+  n: number
+  source?: Source
+  onSelect?: (n: number) => void
+}) {
   return (
     <Tooltip>
       <TooltipTrigger
         render={
-          <sup className="ml-px cursor-default font-sans text-[10px] text-muted-foreground" />
+          onSelect ? (
+            <button
+              type="button"
+              aria-label={`Quelle ${n}`}
+              onClick={() => onSelect(n)}
+              className={cn(SUP, "align-super hover:text-foreground")}
+            />
+          ) : (
+            <sup className={cn(SUP, "cursor-default")} />
+          )
         }
       >
         {n}
@@ -77,14 +97,26 @@ function Footnote({ n, source }: { n: number; source?: Source }) {
 export function Prose({
   parts,
   sources,
+  onFootnote,
+  size = "default",
   className,
 }: {
   parts: (string | { footnote: number })[]
   sources: Source[]
+  /** Makes footnotes clickable, e.g. to point at the source in a list beside the text. */
+  onFootnote?: (n: number) => void
+  /** "reading" is one step larger, for the wide column of a research. */
+  size?: "default" | "reading"
   className?: string
 }) {
   return (
-    <p className={cn("voice text-foreground", className)}>
+    <p
+      className={cn(
+        size === "reading" ? "reading" : "voice",
+        "text-foreground",
+        className
+      )}
+    >
       {parts.map((part, index) =>
         typeof part === "string" ? (
           part
@@ -93,6 +125,7 @@ export function Prose({
             key={index}
             n={part.footnote}
             source={sources.find((source) => source.n === part.footnote)}
+            onSelect={onFootnote}
           />
         )
       )}
@@ -100,7 +133,64 @@ export function Prose({
   )
 }
 
-export function SourceList({ items }: { items: Source[] }) {
+function StackedSource({
+  source,
+  highlighted,
+}: {
+  source: Source
+  highlighted: boolean
+}) {
+  const item = useRef<HTMLLIElement>(null)
+  useEffect(() => {
+    if (highlighted) item.current?.scrollIntoView({ block: "nearest" })
+  }, [highlighted])
+  return (
+    <li
+      ref={item}
+      data-highlighted={highlighted || undefined}
+      className="-mx-2 flex gap-3 rounded-md px-2 py-2.5 transition-colors duration-150 data-highlighted:bg-muted"
+    >
+      <span className="w-4 shrink-0 text-xs text-muted-foreground tabular-nums">
+        {source.n}
+      </span>
+      <span className="min-w-0">
+        <span className="block text-foreground">{source.title}</span>
+        {source.detail && (
+          <span className="mt-0.5 block text-xs text-muted-foreground">
+            {source.detail}
+          </span>
+        )}
+      </span>
+    </li>
+  )
+}
+
+/**
+ * Numbered sources. Inline: one gray line each, under an answer. Stacked: title and kind
+ * on two lines with hairlines, for the sources column of a research.
+ */
+export function SourceList({
+  items,
+  layout = "inline",
+  highlighted,
+}: {
+  items: Source[]
+  layout?: "inline" | "stacked"
+  highlighted?: number | null
+}) {
+  if (layout === "stacked") {
+    return (
+      <ol className="flex flex-col divide-y">
+        {items.map((source) => (
+          <StackedSource
+            key={source.n}
+            source={source}
+            highlighted={source.n === highlighted}
+          />
+        ))}
+      </ol>
+    )
+  }
   return (
     <ol className="space-y-1 text-xs text-muted-foreground">
       {items.map((source) => (

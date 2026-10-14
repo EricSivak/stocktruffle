@@ -29,7 +29,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="flex h-svh">
         <NavRail />
         <main className="min-w-0 flex-1 overflow-y-auto">{children}</main>
-        {showAgent && <AgentPanel />}
+        {/* A new page starts a new conversation; questions don't follow you around. */}
+        {showAgent && <AgentPanel key={agent.context?.label} />}
       </div>
       <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
       <Toaster position="bottom-left" />

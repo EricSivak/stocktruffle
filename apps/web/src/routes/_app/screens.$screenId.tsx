@@ -24,31 +24,48 @@ import { summarize } from "@/features/screen/summary"
 import { TrackDialog } from "@/features/screen/track-dialog"
 import { formatCompact, formatNumber, formatPercent } from "@/lib/format"
 import { screenThread } from "@/prototype/fixtures/agent"
+import { AS_OF_DATE } from "@/prototype/fixtures/calendar"
 import type { Company } from "@/prototype/fixtures/companies"
-import { rules as initialRules, screenById } from "@/prototype/fixtures/screens"
+import {
+  draftScreen,
+  rules as initialRules,
+  screenById,
+  type SavedScreen,
+} from "@/prototype/fixtures/screens"
 
 type ScreenState = "laden" | "leer" | "fehler" | "veraltet"
 const STATES: ScreenState[] = ["laden", "leer", "fehler", "veraltet"]
 
 export const Route = createFileRoute("/_app/screens/$screenId")({
-  // ?zustand=… shows the loading, empty, error and stale designs; only for review in development.
+  // ?q=… is the query of a new, unsaved screen (/screens/neu). ?zustand=… shows the loading,
+  // empty, error and stale designs; only for review in development.
   validateSearch: (
     search: Record<string, unknown>
-  ): { zustand?: ScreenState } => {
+  ): { q?: string; zustand?: ScreenState } => {
     const state = search.zustand
-    return import.meta.env.DEV && STATES.includes(state as ScreenState)
-      ? { zustand: state as ScreenState }
-      : {}
+    return {
+      ...(typeof search.q === "string" && { q: search.q }),
+      ...(import.meta.env.DEV &&
+        STATES.includes(state as ScreenState) && {
+          zustand: state as ScreenState,
+        }),
+    }
   },
-  loader: ({ params }) => {
+  loaderDeps: ({ search }) => ({ q: search.q }),
+  loader: ({ params, deps }) => {
+    if (params.screenId === "neu") return draftScreen(deps.q ?? "")
     const screen = screenById(params.screenId)
     if (!screen) throw notFound()
     return screen
   },
-  component: ScreenView,
+  component: ScreenRoute,
 })
 
-const AGENT_CONTEXT = { label: "sieht diesen Screen", thread: screenThread }
+const AGENT_CONTEXT = {
+  label: "sieht diesen Screen",
+  thread: screenThread,
+  placeholder: "Frag zu diesem Screen",
+}
 const HIDEABLE = columns.filter((column) => column.id !== "name")
 
 function MetaLine({ rows, stale }: { rows: Company[]; stale: boolean }) {
@@ -92,8 +109,13 @@ function Message({
   )
 }
 
-function ScreenView() {
+// Another screen or query starts from its own filters, sorting and selection.
+function ScreenRoute() {
   const screen = Route.useLoaderData()
+  return <ScreenView key={`${screen.id}:${screen.query}`} screen={screen} />
+}
+
+function ScreenView({ screen }: { screen: SavedScreen }) {
   const { zustand } = Route.useSearch()
   const navigate = useNavigate()
   const agent = useAgentPanel()
@@ -152,7 +174,7 @@ function ScreenView() {
     <div className="mx-auto flex max-w-6xl flex-col px-8 pt-8 pb-16">
       <PageHeader
         title={screen.name}
-        meta={`Gespeicherter Screen · ${screen.updatedAt}`}
+        meta={screen.meta}
         actions={
           <>
             {!agent.open && (
@@ -274,7 +296,20 @@ function ScreenView() {
         </p>
       )}
 
-      <TrackDialog company={tracking} onClose={() => setTracking(null)} />
+      <TrackDialog
+        company={tracking}
+        origin={
+          screen.id === "neu"
+            ? null
+            : {
+                kind: "screen",
+                title: screen.name,
+                date: AS_OF_DATE,
+                to: { screenId: screen.id },
+              }
+        }
+        onClose={() => setTracking(null)}
+      />
     </div>
   )
 }

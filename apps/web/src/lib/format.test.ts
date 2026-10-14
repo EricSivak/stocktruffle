@@ -2,11 +2,16 @@ import { describe, expect, it } from "vitest"
 
 import {
   MISSING,
+  formatAxisPrice,
+  formatClock,
   formatCompact,
   formatDate,
+  formatDuration,
+  formatMonth,
   formatNumber,
   formatPercent,
   formatPrice,
+  formatTime,
 } from "@/lib/format"
 
 // Intl separates a number from its unit with a no-break space.
@@ -99,5 +104,35 @@ describe("formatDate", () => {
   it("shows a dash for a missing or unreadable date", () => {
     expect(formatDate(null)).toBe(MISSING)
     expect(formatDate("kein Datum")).toBe(MISSING)
+  })
+})
+
+describe("chart labels", () => {
+  const plain = (text: string) => text.replace(/\s/gu, " ")
+
+  it("writes axis prices with only the decimals they need", () => {
+    expect(plain(formatAxisPrice(40, "EUR"))).toBe("40 €")
+    expect(plain(formatAxisPrice(42.5, "EUR"))).toBe("42,5 €")
+    expect(formatAxisPrice(null)).toBe("–")
+  })
+
+  it("writes times and months the German way", () => {
+    expect(formatTime(new Date(2026, 9, 9, 9, 5))).toBe("09:05")
+    expect(formatMonth(new Date(2026, 2, 1))).toBe("Mär")
+  })
+})
+
+describe("durations", () => {
+  const plain = (text: string) => text.replace(/\s/gu, " ")
+
+  it("writes how long research took", () => {
+    expect(plain(formatDuration(100))).toBe("1 Min 40")
+    expect(plain(formatDuration(120))).toBe("2 Min")
+    expect(plain(formatDuration(40))).toBe("40 Sek")
+  })
+
+  it("writes a running clock", () => {
+    expect(formatClock(4)).toBe("0:04")
+    expect(formatClock(100)).toBe("1:40")
   })
 })

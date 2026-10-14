@@ -1,12 +1,11 @@
-import { useEffect, useRef } from "react"
 import {
   useTable,
   type ColumnVisibilityState,
   type SortingState,
 } from "@tanstack/react-table"
-import { ArrowDownIcon, ArrowUpIcon } from "lucide-react"
 import { cn } from "cn"
 
+import { ariaSort, SortButton } from "@/components/sort-button"
 import { Sparkline } from "@/components/sparkline"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,6 +19,7 @@ import {
 import { columns, features, NUMERIC_COLUMNS } from "@/features/screen/columns"
 import { formatCompact, formatNumber, formatPercent } from "@/lib/format"
 import { useHotkey } from "@/lib/keys"
+import { useRowNavigation } from "@/lib/use-row-navigation"
 import type { Company } from "@/prototype/fixtures/companies"
 
 function Preview({
@@ -112,26 +112,14 @@ export function ResultsTable({
     onColumnVisibilityChange,
   })
   const ordered = table.getRowModel().rows
-  const activeIndex = Math.max(
-    0,
-    ordered.findIndex((row) => row.original.symbol === activeSymbol)
-  )
-  const active = ordered[activeIndex]?.original
-  const rowRefs = useRef(new Map<string, HTMLTableRowElement>())
-
-  useEffect(() => {
-    if (active)
-      rowRefs.current.get(active.symbol)?.scrollIntoView({ block: "nearest" })
-  }, [active])
-
-  const move = (step: number) => {
-    const next =
-      ordered[Math.min(ordered.length - 1, Math.max(0, activeIndex + step))]
-    if (next) onActiveChange(next.original.symbol)
-  }
+  const { active: activeRow, rowRef } = useRowNavigation({
+    items: ordered,
+    keyOf: (row) => row.original.symbol,
+    activeKey: activeSymbol,
+    onActiveChange,
+  })
+  const active = activeRow?.original
   const enabled = ordered.length > 0
-  useHotkey("j", () => move(1), enabled)
-  useHotkey("k", () => move(-1), enabled)
   useHotkey(" ", () => onPreviewChange(!previewOpen), enabled)
   useHotkey("enter", () => active && onOpen(active), enabled)
   useHotkey("t", () => active && onTrack(active), enabled)
@@ -151,34 +139,18 @@ export function ResultsTable({
                 return (
                   <TableHead
                     key={header.id}
-                    aria-sort={
-                      sorted === "asc"
-                        ? "ascending"
-                        : sorted === "desc"
-                          ? "descending"
-                          : undefined
-                    }
+                    aria-sort={ariaSort(sorted)}
                     className={cn(
                       numeric && "text-right",
                       header.column.id === "name" && "pl-5"
                     )}
                   >
-                    <button
-                      type="button"
+                    <SortButton
+                      sorted={sorted}
                       onClick={header.column.getToggleSortingHandler()}
-                      className={cn(
-                        "inline-flex items-center gap-1 hover:text-foreground",
-                        sorted && "text-foreground"
-                      )}
                     >
                       <table.FlexRender header={header} />
-                      {sorted === "desc" && (
-                        <ArrowDownIcon className="size-3" aria-hidden="true" />
-                      )}
-                      {sorted === "asc" && (
-                        <ArrowUpIcon className="size-3" aria-hidden="true" />
-                      )}
-                    </button>
+                    </SortButton>
                   </TableHead>
                 )
               })}
@@ -192,10 +164,7 @@ export function ResultsTable({
             return [
               <TableRow
                 key={row.id}
-                ref={(element) => {
-                  if (element) rowRefs.current.set(company.symbol, element)
-                  else rowRefs.current.delete(company.symbol)
-                }}
+                ref={rowRef(company.symbol)}
                 data-state={isActive ? "selected" : undefined}
                 className={cn(
                   "cursor-default",
@@ -249,7 +218,7 @@ export function TableSkeleton({ rows = 10 }: { rows?: number }) {
       {Array.from({ length: rows }, (_, index) => (
         <div
           key={index}
-          className="flex h-10 items-center gap-6 border-b px-5 last:border-0"
+          className="flex h-row items-center gap-6 border-b px-5 last:border-0"
         >
           <span className="h-2 w-40 rounded-full bg-muted" />
           <span className="ml-auto h-2 w-14 rounded-full bg-muted" />

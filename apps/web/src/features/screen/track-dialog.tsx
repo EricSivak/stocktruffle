@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import type { Company } from "@/prototype/fixtures/companies"
+import type { Origin } from "@/prototype/fixtures/tracking"
+import { tracking } from "@/prototype/tracking-store"
 
 const SUGGESTIONS = [
   "Interessant, wenn das KGV unter 10 fällt",
@@ -22,9 +24,12 @@ const SUGGESTIONS = [
 /** Track a stock: the thesis is optional, signals can be picked from suggestions. */
 export function TrackDialog({
   company,
+  origin = null,
   onClose,
 }: {
   company: Company | null
+  /** Where the idea came from, shown on the tracking page. */
+  origin?: Origin | null
   onClose: () => void
 }) {
   const navigate = useNavigate()
@@ -38,6 +43,12 @@ export function TrackDialog({
             className="flex flex-col gap-4"
             onSubmit={(event) => {
               event.preventDefault()
+              const thesis = new FormData(event.currentTarget).get("thesis")
+              tracking.track(company, {
+                thesis: typeof thesis === "string" ? thesis.trim() : "",
+                signals: picked,
+                origin,
+              })
               onClose()
               setPicked([])
               toast(`${company.name} wird getrackt`, {

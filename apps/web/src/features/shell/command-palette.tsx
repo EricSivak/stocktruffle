@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/command"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { useAgentPanel } from "@/features/agent/agent-panel-context"
-import { companies } from "@/prototype/fixtures/companies"
+import { allCompanies } from "@/prototype/fixtures/companies"
 import { screens } from "@/prototype/fixtures/screens"
 
 const pages = [
@@ -78,7 +78,7 @@ export function CommandPalette({
             ))}
           </CommandGroup>
           <CommandGroup heading="Aktien">
-            {companies.map((company) => (
+            {allCompanies.map((company) => (
               <CommandItem
                 key={company.symbol}
                 value={`${company.name} ${company.symbol}`}
@@ -107,15 +107,7 @@ export function CommandPalette({
                 </KbdGroup>
               </CommandShortcut>
             </CommandItem>
-            <CommandItem
-              onSelect={run(
-                () =>
-                  void navigate({
-                    to: "/recherche/$id",
-                    params: { id: "demo" },
-                  })
-              )}
-            >
+            <CommandItem onSelect={run(() => void navigate({ to: "/" }))}>
               Neue Recherche
             </CommandItem>
             <CommandItem onSelect={run(() => setTheme("light"))}>

@@ -8,9 +8,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    /* 13 px is the working size of the interface. */
+    /* Density lives in these two values: the working text size and the height of a table row. */
     --text-sm: 0.8125rem;
     --text-sm--line-height: calc(1.25 / 0.8125);
+    --spacing-row: 2.5rem;
 }
 
 @theme inline {
@@ -163,6 +164,13 @@
     font-family: var(--font-serif);
     font-size: 15px;
     line-height: 1.6;
+}
+
+/* Prose in a wide reading column, such as a finished research: one step larger. */
+@utility reading {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.65;
 }
 
 /* Figures in tables and lists: same width per digit, aligned on the right edge. */

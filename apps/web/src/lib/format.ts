@@ -121,3 +121,63 @@ export function formatDate(
   if (Number.isNaN(date.getTime())) return MISSING
   return (options.year ? dayMonthYear : dayMonth).format(date)
 }
+
+/** A price on a chart axis: as few decimals as the tick needs, "40 €" or "42,5 €". */
+export function formatAxisPrice(value: Numeric, currency?: string): string {
+  if (isMissing(value)) return MISSING
+  const text = withMinusSign(
+    numberFormat({ maximumFractionDigits: 2 }).format(value)
+  )
+  return currency ? text + NBSP + currencySymbol(currency) : text
+}
+
+const hourMinute = new Intl.DateTimeFormat(LOCALE, {
+  hour: "2-digit",
+  minute: "2-digit",
+})
+
+/** A time of day as "14:30". */
+export function formatTime(value: Date | null | undefined): string {
+  if (!value || Number.isNaN(value.getTime())) return MISSING
+  return hourMinute.format(value)
+}
+
+// Three letters without a dot, as on a chart axis; Intl writes "Jan." and "Juni".
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mär",
+  "Apr",
+  "Mai",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Okt",
+  "Nov",
+  "Dez",
+]
+
+/** A month as a short axis label: "Mär". */
+export function formatMonth(value: Date): string {
+  return MONTHS[value.getMonth()]
+}
+
+/** How long something took: "1 Min 40", or "40 Sek" under a minute. */
+export function formatDuration(seconds: Numeric): string {
+  if (isMissing(seconds)) return MISSING
+  const whole = Math.round(seconds)
+  const minutes = Math.floor(whole / 60)
+  const rest = whole % 60
+  if (minutes === 0) return `${rest}${NBSP}Sek`
+  return rest === 0
+    ? `${minutes}${NBSP}Min`
+    : `${minutes}${NBSP}Min ${String(rest).padStart(2, "0")}`
+}
+
+/** A running clock: "0:04", "1:40". */
+export function formatClock(seconds: Numeric): string {
+  if (isMissing(seconds)) return MISSING
+  const whole = Math.max(0, Math.floor(seconds))
+  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`
+}

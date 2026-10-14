@@ -2,8 +2,15 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react"
 
 import type { ThreadItem } from "@/prototype/fixtures/agent"
 
-/** What the agent sees on the current page: a short label and the conversation so far. */
-export type AgentContext = { label: string; thread: ThreadItem[] }
+/**
+ * What the agent sees on the current page: a short label, the conversation so far and the
+ * prompt in its input. Pages pass a memoised object, or the panel would reset on every render.
+ */
+export type AgentContext = {
+  label: string
+  thread: ThreadItem[]
+  placeholder?: string
+}
 
 type AgentPanelState = {
   open: boolean

@@ -52,12 +52,16 @@ export function AgentPanel() {
 
       <div className="p-4">
         <Composer
-          placeholder="Frag zu diesem Screen"
+          placeholder={context?.placeholder ?? "Frag zu dieser Seite"}
           research={research}
           onResearchChange={setResearch}
           onSubmit={(question) => {
             if (research) {
-              void navigate({ to: "/recherche/$id", params: { id: "demo" } })
+              void navigate({
+                to: "/recherche/$id",
+                params: { id: "neu" },
+                search: { frage: question },
+              })
               return
             }
             setAsked((items) => [
