@@ -4,10 +4,8 @@ import { Lockup } from "@/components/brand/logo"
 import { isQuestion } from "@/features/omnibox/is-question"
 import { SearchField } from "@/features/omnibox/search-field"
 import { BriefingList } from "@/features/start/briefing-list"
-import { MarketLine } from "@/features/start/market-line"
 import { MarketStatus } from "@/features/start/market-status"
 import { briefing, searchExamples } from "@/prototype/fixtures/briefing"
-import { marketQuotes } from "@/prototype/fixtures/market"
 
 export const Route = createFileRoute("/_app/")({ component: Start })
 
@@ -29,10 +27,11 @@ function Start() {
         })
 
   return (
-    <div className="relative flex min-h-full flex-col px-8">
+    // The start page is one screen: it never scrolls.
+    <div className="relative flex h-full flex-col overflow-hidden px-8">
       <MarketStatus className="absolute top-6 right-8 text-xs text-muted-foreground" />
 
-      <div className="mx-auto flex w-full max-w-[640px] flex-col pt-[16vh]">
+      <div className="mx-auto flex w-full max-w-[640px] flex-col pt-[14vh]">
         <Lockup size={56} className="self-center" />
         <SearchField
           size="large"
@@ -54,10 +53,6 @@ function Start() {
           ))}
         </ul>
         <BriefingList items={briefing} className="mt-14" />
-      </div>
-
-      <div className="mt-auto pt-16">
-        <MarketLine quotes={marketQuotes} />
       </div>
     </div>
   )
