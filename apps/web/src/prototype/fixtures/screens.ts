@@ -1,4 +1,4 @@
-import { AS_OF_TIME } from "./calendar"
+import { AS_OF_DATE, AS_OF_TIME } from "./calendar"
 import { allCompanies, companies, type Company } from "./companies"
 import { defenceResearch } from "./research"
 
@@ -10,7 +10,10 @@ export type SavedScreen = {
   query: string
   /** Gray text next to the title: whether and when it was saved. */
   meta: string
+  updatedOn: string
   updatedAt: string
+  /** Hits that were not there on the run before. */
+  newSinceLastRun: number
   filters: FilterToken[]
   rows: Company[]
 }
@@ -35,7 +38,9 @@ export const screens: SavedScreen[] = [
     name: "Europe Small Caps",
     query: "Profitable small caps in Europe, P/E under 15",
     meta: `Saved screen · ${AS_OF_TIME}`,
+    updatedOn: AS_OF_DATE,
     updatedAt: AS_OF_TIME,
+    newSinceLastRun: 3,
     filters: europeFilters,
     rows: companies,
   },
@@ -44,7 +49,9 @@ export const screens: SavedScreen[] = [
     name: "Defence suppliers",
     query: "European defence suppliers under €2bn",
     meta: `From research · ${AS_OF_TIME}`,
+    updatedOn: AS_OF_DATE,
     updatedAt: AS_OF_TIME,
+    newSinceLastRun: 0,
     filters: [
       { id: "region", label: "Region", value: "Europe" },
       { id: "industry", label: "Industry", value: "Defence" },
@@ -71,7 +78,9 @@ export function draftScreen(query: string): SavedScreen {
     name: "New screen",
     query,
     meta: "Not saved",
+    updatedOn: AS_OF_DATE,
     updatedAt: AS_OF_TIME,
+    newSinceLastRun: 0,
     filters: europeFilters,
     rows: companies,
   }

@@ -16,20 +16,34 @@ const VIEWPORT = { width: 1536, height: 1024 }
 const selectSecondRow = (view) => view.keyboard.press("j")
 const openHausberg = (view) => view.getByRole("row", { name: /Hausberg Wohnbau/ }).first().click()
 const blurSearch = (view) => view.evaluate(() => document.activeElement?.blur())
+const openFirstRow = (view) => view.locator("tbody tr").first().click()
 
 const PAGES = [
-  { name: "01-start", path: "/", theme: "light", ready: "main form[role=search]", prepare: blurSearch, mockup: "01-start.webp" },
+  { name: "01-start", path: "/", theme: "light", ready: "main form[role=search]", prepare: blurSearch, mockup: "mockups-v2/01-start.webp" },
   { name: "01-start-dunkel", path: "/", theme: "dark", ready: "main form[role=search]", prepare: blurSearch },
-  { name: "02-screen-mit-agent", path: "/screens/europe-small-caps", agent: true, theme: "light", prepare: selectSecondRow, mockup: "02-screen-mit-agent.webp" },
-  { name: "06-screen-dunkel", path: "/screens/europe-small-caps", agent: false, theme: "dark", prepare: selectSecondRow, mockup: "06-screen-dunkel.webp" },
+  { name: "02-screen-mit-agent", path: "/screens/europe-small-caps", agent: true, theme: "light", prepare: selectSecondRow, mockup: "mockups-v2/02-screen-mit-agent.webp" },
+  { name: "06-screen-dunkel", path: "/screens/europe-small-caps", agent: false, theme: "dark", prepare: selectSecondRow, mockup: "mockups-v2/06-screen-dunkel.webp" },
   { name: "02-screen-dunkel-mit-agent", path: "/screens/europe-small-caps", agent: true, theme: "dark", prepare: selectSecondRow },
-  { name: "03-recherche", path: "/research/demo", theme: "light", mockup: "03-recherche.webp" },
+  { name: "03-recherche", path: "/research/demo", theme: "light", mockup: "mockups-v2/03-recherche.webp" },
   { name: "03-recherche-dunkel", path: "/research/demo", theme: "dark" },
-  { name: "04-aktie", path: "/stocks/NWT.DE", theme: "light", mockup: "04-aktie.webp" },
+  { name: "04-aktie", path: "/stocks/NWT.DE", theme: "light", mockup: "mockups-v2/04-aktie.webp" },
   { name: "04-aktie-dunkel", path: "/stocks/NWT.DE", theme: "dark" },
-  { name: "05-tracking", path: "/tracking", theme: "light", prepare: openHausberg, mockup: "05-tracking.webp" },
+  { name: "05-tracking", path: "/tracking", theme: "light", prepare: openHausberg, mockup: "mockups-v2/05-tracking.webp" },
   { name: "05-tracking-dunkel", path: "/tracking", theme: "dark", prepare: openHausberg },
+  { name: "07-signale", path: "/signals", theme: "light", prepare: openFirstRow },
+  { name: "07-signale-dunkel", path: "/signals", theme: "dark", prepare: openFirstRow },
+  { name: "08-screens", path: "/screens", theme: "light" },
+  { name: "08-screens-dunkel", path: "/screens", theme: "dark" },
+  { name: "09-einstellungen", path: "/settings", theme: "light" },
+  { name: "09-einstellungen-dunkel", path: "/settings", theme: "dark" },
+  { name: "11-nicht-gefunden", path: "/stocks/XXXX", theme: "light" },
   { name: "styleguide", path: "/styleguide", agent: false, theme: "light", fullPage: true },
+]
+
+// The login is taken signed out, before the test account signs in.
+const LOGIN_PAGES = [
+  { name: "10-login", theme: "light", mockup: "mockups-v1/03-login.webp" },
+  { name: "10-login-dunkel", theme: "dark" },
 ]
 
 function supabaseStatus() {
@@ -61,11 +75,24 @@ mkdirSync(OUT, { recursive: true })
 const browser = await chromium.launch({ channel: "msedge" })
 const problems = []
 try {
+  for (const shot of LOGIN_PAGES) {
+    const context = await browser.newContext({ viewport: VIEWPORT, colorScheme: shot.theme })
+    await context.addInitScript((theme) => localStorage.setItem("theme", theme), shot.theme)
+    const view = await context.newPage()
+    view.on("pageerror", (error) => problems.push(`${shot.name}: ${error.message}`))
+    await view.goto(`${BASE}/login`)
+    await view.getByText("Connected locally").waitFor()
+    await view.evaluate(() => document.fonts.ready)
+    await view.evaluate(() => document.activeElement?.blur())
+    await view.screenshot({ path: join(OUT, `${shot.name}.png`) })
+    await context.close()
+  }
+
   const login = await browser.newContext({ viewport: VIEWPORT })
   const page = await login.newPage()
   await page.goto(`${BASE}/login`)
   await page.getByLabel("Email").fill(email)
-  await page.getByLabel("Password").fill(password)
+  await page.getByLabel("Password", { exact: true }).fill(password)
   await page.getByRole("button", { name: "Sign in" }).click()
   await page.waitForURL(`${BASE}/`)
   await page.locator("main form[role=search]").waitFor()
@@ -94,10 +121,11 @@ try {
   await deleteUser(status, userId)
 }
 
-const rows = PAGES.filter((shot) => shot.mockup)
+// Pages with a mockup sit next to it; pages without one stand alone on the right.
+const rows = [...LOGIN_PAGES, ...PAGES.filter((shot) => shot.name !== "styleguide")]
   .map(
     (shot) => `<section><h2>${shot.name}</h2><div class="pair">
-<figure><img src="mockups-v2/${shot.mockup}"><figcaption>Mockup</figcaption></figure>
+${shot.mockup ? `<figure><img src="${shot.mockup}"><figcaption>Mockup</figcaption></figure>` : "<div></div>"}
 <figure><img src="prototyp-v2/${shot.name}.png"><figcaption>Prototyp</figcaption></figure></div></section>`
   )
   .join("\n")

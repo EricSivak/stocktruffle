@@ -100,6 +100,10 @@
     --chart-5: #e2d9cc;
     --radius: 6px;
     --shadow-overlay: 0 1px 2px rgb(29 25 21 / 0.06), 0 8px 24px rgb(29 25 21 / 0.08);
+    /* The login sheet, the one surface allowed a shadow on content (konzept.md). */
+    --shadow-sheet: 0 1px 2px rgb(29 25 21 / 0.04), 0 16px 48px rgb(29 25 21 / 0.06);
+    /* The dark surface behind the login's vein pattern, the same in both themes. */
+    --truffle-surface: #1b1714;
     --sidebar: #f5f1ea;
     --sidebar-foreground: #1d1915;
     --sidebar-primary: #1d1915;
@@ -140,6 +144,7 @@
     --chart-4: #74685e;
     --chart-5: #2f2823;
     --shadow-overlay: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.35);
+    --shadow-sheet: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 48px rgb(0 0 0 / 0.35);
     --sidebar: #12100e;
     --sidebar-foreground: #f3ede4;
     --sidebar-primary: #f3ede4;

@@ -4,9 +4,15 @@ import { ARCHIVED, TRACKED_SINCE } from "./anchors"
 import { yearIndex } from "./calendar"
 import { companyBySymbol } from "./companies"
 
-export type Rhythm = "daily" | "weekly" | "after earnings"
+export const RHYTHMS = ["daily", "weekly", "after earnings"] as const
+export type Rhythm = (typeof RHYTHMS)[number]
 
-export type Signal = { id: string; text: string; rhythm: Rhythm }
+export type Signal = {
+  id: string
+  text: string
+  rhythm: Rhythm
+  createdAt: string
+}
 
 /** Where the idea came from; linked when the prototype has that page. */
 export type Origin = {
@@ -60,6 +66,7 @@ const details: Record<
         id: "s1",
         text: "Interesting when the P/E falls below 10",
         rhythm: "daily",
+        createdAt: "2026-09-02",
       },
     ],
   },
@@ -75,11 +82,13 @@ const details: Record<
         id: "s2",
         text: "Interesting when mortgage rates fall",
         rhythm: "weekly",
+        createdAt: "2026-08-21",
       },
       {
         id: "s3",
         text: "Order intake turns positive",
         rhythm: "after earnings",
+        createdAt: "2026-09-14",
       },
     ],
   },
@@ -88,7 +97,12 @@ const details: Record<
     thesis: "Measuring equipment for wind farms, high margin.",
     origin: SCREEN_ORIGIN("2026-09-30"),
     signals: [
-      { id: "s4", text: "Interesting when insiders buy", rhythm: "daily" },
+      {
+        id: "s4",
+        text: "Interesting when insiders buy",
+        rhythm: "daily",
+        createdAt: "2026-09-30",
+      },
     ],
   },
   "LKS.HE": { thesis: "", origin: null, signals: [] },

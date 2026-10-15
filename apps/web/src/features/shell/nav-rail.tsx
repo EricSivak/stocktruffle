@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -116,9 +117,12 @@ export function NavRail() {
           <DropdownMenuContent side="right" align="end" className="w-56">
             {email && (
               <>
-                <DropdownMenuLabel className="truncate font-normal text-muted-foreground">
-                  {email}
-                </DropdownMenuLabel>
+                {/* Base UI labels belong to a group; outside one the menu throws. */}
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel className="truncate font-normal text-muted-foreground">
+                    {email}
+                  </DropdownMenuLabel>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
               </>
             )}

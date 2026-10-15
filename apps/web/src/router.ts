@@ -1,8 +1,14 @@
 import { createRouter } from "@tanstack/react-router"
 
+import { NotFound } from "@/components/not-found"
 import { routeTree } from "@/routeTree.gen"
 
-export const router = createRouter({ routeTree, defaultPreload: "intent" })
+export const router = createRouter({
+  routeTree,
+  defaultPreload: "intent",
+  // Outside the app frame, e.g. before signing in.
+  defaultNotFoundComponent: NotFound,
+})
 
 declare module "@tanstack/react-router" {
   interface Register {

@@ -64,6 +64,7 @@ export type Database = {
     }
     Functions: {
       hook_single_user: { Args: { event: Json }; Returns: Json }
+      installation_has_account: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

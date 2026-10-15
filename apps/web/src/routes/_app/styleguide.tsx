@@ -196,6 +196,15 @@ function Specimen() {
             there would be 34 hits.{" "}
             <Button variant="plain">Remove P/E filter</Button>
           </p>
+          <p>
+            Yahoo isn&apos;t answering right now. The last result from 17:35 is
+            saved. <Button variant="plain">Try again</Button>
+          </p>
+          <p className="text-muted-foreground">Nothing tracked yet.</p>
+          <div
+            className="h-16 rounded-md bg-muted/60"
+            aria-label="Chart loading"
+          />
           <p className="text-xs text-muted-foreground">
             As of yesterday, 17:35 ·{" "}
             <span className="text-foreground underline">Refresh</span>

@@ -11,6 +11,7 @@ import {
   type ArchivedStock,
   type Origin,
   type Rhythm,
+  type Signal,
   type TrackedStock,
 } from "@/prototype/fixtures/tracking"
 
@@ -80,6 +81,7 @@ export const tracking = {
         id: `new-${nextId++}`,
         text,
         rhythm: "daily",
+        createdAt: AS_OF_DATE,
       })),
     }
     set({ ...state, active: [...state.active, stock] })
@@ -127,9 +129,48 @@ export const tracking = {
   addSignal: (symbol: string, text: string, rhythm: Rhythm = "daily") =>
     updateStock(symbol, (stock) => ({
       ...stock,
-      signals: [...stock.signals, { id: `new-${nextId++}`, text, rhythm }],
+      signals: [
+        ...stock.signals,
+        { id: `new-${nextId++}`, text, rhythm, createdAt: AS_OF_DATE },
+      ],
     })),
+
+  setRhythm: (symbol: string, id: string, rhythm: Rhythm) =>
+    updateStock(symbol, (stock) => ({
+      ...stock,
+      signals: stock.signals.map((signal) =>
+        signal.id === id ? { ...signal, rhythm } : signal
+      ),
+    })),
+
+  /** Deletes a signal; returns an undo that puts it back in its place. */
+  removeSignal(symbol: string, id: string): (() => void) | null {
+    const stock = tracking.find(symbol)
+    const index = stock?.signals.findIndex((signal) => signal.id === id) ?? -1
+    if (!stock || index < 0) return null
+    const signal = stock.signals[index]
+    updateStock(symbol, (current) => ({
+      ...current,
+      signals: current.signals.filter((item) => item.id !== id),
+    }))
+    return () =>
+      updateStock(symbol, (current) => {
+        const signals = [...current.signals]
+        signals.splice(index, 0, signal)
+        return { ...current, signals }
+      })
+  },
 
   /** Back to the mockup's data; for tests. */
   reset: () => set(initial()),
+}
+
+/** A signal together with the stock it belongs to. */
+export type SignalRow = Signal & { symbol: string }
+
+/** Every signal of every tracked stock, in tracking order. */
+export function allSignals(state: TrackingState): SignalRow[] {
+  return state.active.flatMap((stock) =>
+    stock.signals.map((signal) => ({ ...signal, symbol: stock.symbol }))
+  )
 }

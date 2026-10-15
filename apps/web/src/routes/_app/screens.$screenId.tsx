@@ -28,10 +28,10 @@ import { AS_OF_DATE } from "@/prototype/fixtures/calendar"
 import type { Company } from "@/prototype/fixtures/companies"
 import {
   draftScreen,
-  rules as initialRules,
   screenById,
   type SavedScreen,
 } from "@/prototype/fixtures/screens"
+import { rulesStore, useRules } from "@/prototype/rules-store"
 
 type ScreenState = "loading" | "empty" | "error" | "stale"
 const STATES: ScreenState[] = ["loading", "empty", "error", "stale"]
@@ -66,7 +66,13 @@ const AGENT_CONTEXT = {
   thread: screenThread,
   placeholder: "Ask about this screen",
 }
-const HIDEABLE = columns.filter((column) => column.id !== "name")
+// Accessor columns carry their id as accessorKey until the table resolves it.
+const HIDEABLE = columns.flatMap((column) => {
+  const id =
+    column.id ??
+    ("accessorKey" in column ? String(column.accessorKey) : undefined)
+  return id && id !== "name" ? [{ id, label: String(column.header) }] : []
+})
 
 function MetaLine({ rows, stale }: { rows: Company[]; stale: boolean }) {
   const summary = summarize(rows)
@@ -122,7 +128,7 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
   useAgentContext(AGENT_CONTEXT)
 
   const [tokens, setTokens] = useState(screen.filters)
-  const [rules, setRules] = useState(initialRules)
+  const rules = useRules()
   const [rerunning, setRerunning] = useState(false)
   const [sorting, setSorting] = useState<SortingState>([
     { id: "revenueGrowth", desc: true },
@@ -190,15 +196,15 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
                 {HIDEABLE.map((column) => (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    checked={columnVisibility[column.id ?? ""] !== false}
+                    checked={columnVisibility[column.id] !== false}
                     onCheckedChange={(checked) =>
                       setColumnVisibility((current) => ({
                         ...current,
-                        [column.id ?? ""]: checked,
+                        [column.id]: checked,
                       }))
                     }
                   >
-                    {String(column.header)}
+                    {column.label}
                   </DropdownMenuCheckboxItem>
                 ))}
               </DropdownMenuContent>
@@ -231,13 +237,7 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
           tokens={tokens}
           onTokensChange={setTokens}
           rules={rules}
-          onToggleRule={(id) =>
-            setRules((current) =>
-              current.map((rule) =>
-                rule.id === id ? { ...rule, active: !rule.active } : rule
-              )
-            )
-          }
+          onToggleRule={rulesStore.toggle}
         />
       </div>
 

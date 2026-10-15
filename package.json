@@ -15,6 +15,7 @@
     "test": "npm run test:engine && npm run test:web",
     "test:engine": "uv run --directory apps/engine pytest",
     "test:web": "npm --prefix apps/web run test",
+    "e2e": "npm --prefix apps/web run e2e",
     "typecheck": "npm --prefix apps/web run typecheck",
     "lint": "npm --prefix apps/web run lint && uv run --directory apps/engine ruff check"
   },

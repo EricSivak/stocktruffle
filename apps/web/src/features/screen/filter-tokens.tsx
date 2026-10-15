@@ -19,6 +19,7 @@ import {
 import { Switch } from "@/components/ui/switch"
 import { catalog } from "@/prototype/catalog"
 import type { FilterToken } from "@/prototype/fixtures/screens"
+import type { Rule } from "@/prototype/rules-store"
 
 const tokenClass =
   "inline-flex h-6 items-center gap-1.5 rounded-md border border-input px-2 text-xs text-foreground transition-colors hover:border-foreground/30 aria-expanded:border-foreground/40"
@@ -69,7 +70,7 @@ function RulesToken({
   rules,
   onToggle,
 }: {
-  rules: { id: string; text: string; active: boolean }[]
+  rules: Rule[]
   onToggle: (id: string) => void
 }) {
   return (
@@ -151,7 +152,7 @@ export function FilterTokens({
 }: {
   tokens: FilterToken[]
   onTokensChange: (tokens: FilterToken[]) => void
-  rules: { id: string; text: string; active: boolean }[]
+  rules: Rule[]
   onToggleRule: (id: string) => void
 }) {
   return (
