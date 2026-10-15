@@ -11,7 +11,7 @@ import { useHotkey } from "@/lib/keys"
 
 /** The start page and the research page are the agent's own surfaces; no side panel there. */
 function agentAllowed(pathname: string) {
-  return pathname !== "/" && !pathname.startsWith("/recherche")
+  return pathname !== "/" && !pathname.startsWith("/research")
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {

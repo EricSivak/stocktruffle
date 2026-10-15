@@ -7,7 +7,7 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group"
 
-/** One line to ask the agent; "Recherche" switches to research mode for the next question. */
+/** One line to ask the agent; "Research" switches to research mode for the next question. */
 export function Composer({
   placeholder,
   research,
@@ -45,11 +45,11 @@ export function Composer({
             onClick={() => onResearchChange(!research)}
             className="text-xs font-normal text-muted-foreground hover:text-foreground aria-pressed:text-foreground"
           >
-            {research ? "Recherche an" : "Recherche aus"}
+            {research ? "Research on" : "Research off"}
           </button>
           <button
             type="submit"
-            aria-label="Senden"
+            aria-label="Send"
             className="text-muted-foreground hover:text-foreground"
           >
             <ArrowRightIcon className="size-4" strokeWidth={1.6} />

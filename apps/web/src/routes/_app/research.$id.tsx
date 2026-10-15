@@ -23,12 +23,12 @@ import { companyBySymbol } from "@/prototype/fixtures/companies"
 import { researchById, type Research } from "@/prototype/fixtures/research"
 import { tracking } from "@/prototype/tracking-store"
 
-export const Route = createFileRoute("/_app/recherche/$id")({
-  // /recherche/neu?frage=… plays a new research; any other id is a finished one.
-  validateSearch: (search: Record<string, unknown>): { frage?: string } =>
-    typeof search.frage === "string" ? { frage: search.frage } : {},
+export const Route = createFileRoute("/_app/research/$id")({
+  // /research/new?q=… plays a new research; any other id is a finished one.
+  validateSearch: (search: Record<string, unknown>): { q?: string } =>
+    typeof search.q === "string" ? { q: search.q } : {},
   loader: ({ params }) => {
-    if (params.id === "neu") return null
+    if (params.id === "new") return null
     const research = researchById(params.id)
     if (!research) throw notFound()
     return research
@@ -38,11 +38,11 @@ export const Route = createFileRoute("/_app/recherche/$id")({
 
 function ResearchRoute() {
   const research = Route.useLoaderData()
-  const { frage } = Route.useSearch()
+  const { q } = Route.useSearch()
   return research ? (
     <FinishedResearch key={research.id} research={research} />
   ) : (
-    <NewResearch key={frage ?? ""} question={frage ?? ""} />
+    <NewResearch key={q ?? ""} question={q ?? ""} />
   )
 }
 
@@ -88,7 +88,7 @@ function FollowUps({
           {item.research ? (
             <RunningSteps />
           ) : (
-            <StepLine>Antwort folgt in Phase 3</StepLine>
+            <StepLine>Answer arrives in phase 3</StepLine>
           )}
         </div>
       ))}
@@ -130,12 +130,12 @@ function FinishedResearch({ research }: { research: Research }) {
       return undo ? [undo] : []
     })
     if (undos.length === 0) {
-      toast("Alle vier Titel sind schon im Tracking")
+      toast("All four stocks are already tracked")
       return
     }
-    toast(`${undos.length} Titel werden getrackt`, {
+    toast(`Tracking ${undos.length} stocks`, {
       action: {
-        label: "Rückgängig",
+        label: "Undo",
         onClick: () => undos.forEach((undo) => undo()),
       },
     })
@@ -155,7 +155,7 @@ function FinishedResearch({ research }: { research: Research }) {
       <PageHeader
         stacked
         title={research.title}
-        meta={`Recherche · abgeschlossen · ${research.sources.length} Quellen · ${formatDuration(research.durationSeconds)}`}
+        meta={`Research · finished · ${research.sources.length} sources · ${formatDuration(research.durationSeconds)}`}
         actions={
           <>
             <Button
@@ -163,21 +163,20 @@ function FinishedResearch({ research }: { research: Research }) {
               onClick={() =>
                 void navigate({
                   to: "/screens/$screenId",
-                  params: { screenId: "ruestungszulieferer" },
+                  params: { screenId: "defence-suppliers" },
                 })
               }
             >
-              Als Screen öffnen
+              Open as screen
             </Button>
             <Button
               onClick={() =>
-                toast("Als Memo gespeichert", {
-                  description:
-                    "Die Memo-Ansicht kommt in einer späteren Phase.",
+                toast("Saved as memo", {
+                  description: "Memos arrive in a later phase.",
                 })
               }
             >
-              Als Memo speichern
+              Save as memo
             </Button>
           </>
         }
@@ -188,7 +187,7 @@ function FinishedResearch({ research }: { research: Research }) {
         <p className="text-xs text-muted-foreground">
           {research.summary} ·{" "}
           <CollapsibleTrigger className="text-foreground underline underline-offset-3 hover:decoration-2">
-            Schritte anzeigen
+            Show steps
           </CollapsibleTrigger>
         </p>
         <CollapsibleContent>
@@ -228,27 +227,27 @@ function FinishedResearch({ research }: { research: Research }) {
           onClick={trackAll}
           className="underline decoration-1 underline-offset-4 hover:decoration-2"
         >
-          Alle tracken
+          Track all
         </button>
         <button
           type="button"
           onClick={() =>
-            toast("In das Memo übernommen", {
-              description: "Die Memo-Ansicht kommt in einer späteren Phase.",
+            toast("Added to memo", {
+              description: "Memos arrive in a later phase.",
             })
           }
           className="underline decoration-1 underline-offset-4 hover:decoration-2"
         >
-          In Memo übernehmen
+          Add to memo
         </button>
       </p>
 
       <p className="mt-8 border-t pt-5">
-        <span className="font-medium">Nicht belegt:</span>{" "}
+        <span className="font-medium">Not verified:</span>{" "}
         <span className="text-muted-foreground">{research.unverified}</span>
       </p>
 
-      <FollowUps placeholder="Nachfragen" />
+      <FollowUps placeholder="Follow up" />
     </ResearchLayout>
   )
 }
@@ -268,13 +267,13 @@ function NewResearch({ question }: { question: string }) {
     >
       <PageHeader
         stacked
-        title="Neue Recherche"
+        title="New research"
         meta={
           question === ""
-            ? "Recherche · noch keine Frage"
+            ? "Research · no question yet"
             : running
-              ? "Recherche · läuft"
-              : "Recherche · Antwort folgt in Phase 3"
+              ? "Research · running"
+              : "Research · answer arrives in phase 3"
         }
       />
       {question !== "" && (
@@ -284,7 +283,9 @@ function NewResearch({ question }: { question: string }) {
         </div>
       )}
       <FollowUps
-        placeholder={question === "" ? "Was willst du wissen?" : "Nachfragen"}
+        placeholder={
+          question === "" ? "What do you want to know?" : "Follow up"
+        }
       />
     </ResearchLayout>
   )

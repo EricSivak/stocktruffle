@@ -55,8 +55,8 @@ export function TrackingTable({ rows }: { rows: TrackedRow[] }) {
   const archive = (row: TrackedRow) => {
     const undo = tracking.archive(row.symbol, row.price)
     if (!undo) return
-    toast(`${row.symbol} archiviert`, {
-      action: { label: "Rückgängig", onClick: undo },
+    toast(`${row.symbol} archived`, {
+      action: { label: "Undo", onClick: undo },
     })
   }
 
@@ -67,7 +67,7 @@ export function TrackingTable({ rows }: { rows: TrackedRow[] }) {
     () =>
       current &&
       void navigate({
-        to: "/aktie/$symbol",
+        to: "/stocks/$symbol",
         params: { symbol: current.symbol },
       }),
     enabled
@@ -132,7 +132,7 @@ export function TrackingTable({ rows }: { rows: TrackedRow[] }) {
                   }}
                   onDoubleClick={() =>
                     void navigate({
-                      to: "/aktie/$symbol",
+                      to: "/stocks/$symbol",
                       params: { symbol: item.symbol },
                     })
                   }

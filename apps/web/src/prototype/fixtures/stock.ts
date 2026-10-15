@@ -24,11 +24,11 @@ export type StockDetails = {
   quarterly: Period[]
   news: NewsItem[]
   events: StockEvent[]
-  /** The agent's prepared answer to "Warum bewegt sich das?". */
+  /** The agent's prepared answer to "Why is it moving?". */
   why: ThreadItem[]
 }
 
-const EVENTS: StockEvent[] = [{ date: "2026-08-13", label: "Q2-Zahlen" }]
+const EVENTS: StockEvent[] = [{ date: "2026-08-13", label: "Q2 results" }]
 
 // Share of a year's revenue per quarter: business picks up towards year end.
 const SEASON = [0.23, 0.25, 0.25, 0.27]
@@ -71,70 +71,70 @@ const nordwind: StockDetails = {
   quarterly: quarters(nordwindAnnual, 0.114),
   news: [
     {
-      title: "Zwei Analysten senken das Kursziel für Nordwind Technik",
-      source: "Analystenkommentar",
+      title: "Two analysts cut their price target for Nordwind Technik",
+      source: "Analyst note",
       date: "2026-10-09",
     },
     {
-      title: "Windkraft-Zulieferer: Auftragslücke ab 2027 erwartet",
-      source: "Branchenbericht",
+      title: "Wind power suppliers: order gap expected from 2027",
+      source: "Industry report",
       date: "2026-09-12",
     },
     {
-      title: "Nordwind Technik hält die Marge im zweiten Quartal",
-      source: "Quartalsbericht",
+      title: "Nordwind Technik holds its margin in the second quarter",
+      source: "Quarterly report",
       date: "2026-08-13",
     },
     {
-      title: "Management bestätigt die Prognose für 2026",
-      source: "Pressemitteilung",
+      title: "Management confirms its guidance for 2026",
+      source: "Press release",
       date: "2026-08-07",
     },
     {
-      title: "Nordwind eröffnet einen Servicestandort in Rostock",
-      source: "Fachpresse",
+      title: "Nordwind opens a service site in Rostock",
+      source: "Trade press",
       date: "2026-07-22",
     },
   ],
   events: EVENTS,
   why: [
-    { kind: "question", text: "Warum bewegt sich Nordwind Technik heute?" },
-    { kind: "steps", text: "Nachrichten geladen · 3 Quellen gelesen" },
+    { kind: "question", text: "Why is Nordwind Technik moving today?" },
+    { kind: "steps", text: "News loaded · 3 sources read" },
     {
       kind: "answer",
       parts: [
-        "Zwei Analysten haben heute ihr Kursziel gesenkt. Sie rechnen damit, dass der Großauftrag 2027 nicht verlängert wird.",
+        "Two analysts cut their price target today. They expect the major contract not to be renewed in 2027.",
         { footnote: 1 },
-        " Am laufenden Geschäft hat sich nichts geändert: Die Marge ist im zweiten Quartal stabil geblieben,",
+        " Nothing has changed in the business itself: the margin held steady in the second quarter,",
         { footnote: 2 },
-        " und das Management hält an der Prognose fest.",
+        " and management stands by its guidance.",
         { footnote: 3 },
       ],
     },
     {
       kind: "sources",
       items: [
-        { n: 1, title: "Analystenkommentar", detail: "09.10.2026" },
-        { n: 2, title: "Quartalsbericht Q2", detail: "13.08.2026" },
-        { n: 3, title: "Pressemitteilung", detail: "07.08.2026" },
+        { n: 1, title: "Analyst note", detail: "09/10/2026" },
+        { n: 2, title: "Q2 quarterly report", detail: "13/08/2026" },
+        { n: 3, title: "Press release", detail: "07/08/2026" },
       ],
     },
   ],
 }
 
 const HEADLINES = [
-  "{name} legt Zahlen zum zweiten Quartal vor",
-  "Analyst hebt das Kursziel für {name}",
-  "{name} meldet einen neuen Auftrag",
-  "{name} bestätigt auf dem Kapitalmarkttag die Ziele bis 2028",
-  "Vorstand von {name} kauft Aktien",
+  "{name} reports second-quarter results",
+  "Analyst raises the price target for {name}",
+  "{name} announces a new order",
+  "{name} confirms its 2028 targets at its capital markets day",
+  "{name} board member buys shares",
 ]
 const SOURCES = [
-  "Quartalsbericht",
-  "Analystenkommentar",
-  "Pressemitteilung",
-  "Fachpresse",
-  "Stimmrechtsmitteilung",
+  "Quarterly report",
+  "Analyst note",
+  "Press release",
+  "Trade press",
+  "Directors' dealings",
 ]
 const NEWS_DATES = [
   "2026-10-06",
@@ -187,8 +187,8 @@ function invented(company: Company): StockDetails {
     news,
     events: EVENTS,
     why: [
-      { kind: "question", text: `Warum bewegt sich ${company.name} heute?` },
-      { kind: "pending", text: "Antwort folgt in Phase 3" },
+      { kind: "question", text: `Why is ${company.name} moving today?` },
+      { kind: "pending", text: "Answer arrives in phase 3" },
     ],
   }
 }

@@ -20,7 +20,7 @@ export function SignalList({
   const [text, setText] = useState("")
   const add = (signal: string) => {
     onAdd(signal)
-    toast("Signal gespeichert. Es wird noch nicht geprüft.")
+    toast("Signal saved. It isn't checked yet.")
   }
   const open = suggestions.filter(
     (suggestion) => !signals.some((signal) => signal.text === suggestion)
@@ -37,7 +37,7 @@ export function SignalList({
             >
               <span className="text-foreground">{signal.text}</span>
               <span className="ml-auto shrink-0 text-xs text-muted-foreground">
-                {signal.rhythm} · nicht aktiv
+                {signal.rhythm} · not active
               </span>
             </li>
           ))}
@@ -56,13 +56,13 @@ export function SignalList({
           <Input
             value={text}
             onChange={(event) => setText(event.target.value)}
-            placeholder="Interessant, wenn …"
-            aria-label="Neues Signal"
+            placeholder="Interesting when …"
+            aria-label="New signal"
           />
         </form>
         {open.length > 0 && (
           <p className="flex items-baseline gap-4 text-muted-foreground">
-            Vorschläge:
+            Suggestions:
             {open.map((suggestion) => (
               <button
                 key={suggestion}

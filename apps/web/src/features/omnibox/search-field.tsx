@@ -52,8 +52,8 @@ export function SearchField({
           ref={input}
           value={value}
           onChange={(event) => setValue(event.target.value)}
-          placeholder="Beschreib, wonach du suchst"
-          aria-label="Suche"
+          placeholder="Describe what you're looking for"
+          aria-label="Search"
           autoFocus={autoFocus}
           className={cn(size === "large" ? "text-[15px]" : "text-sm")}
         />

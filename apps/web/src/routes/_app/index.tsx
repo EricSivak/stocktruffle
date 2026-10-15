@@ -15,13 +15,13 @@ function Start() {
   const search = (text: string) =>
     isQuestion(text)
       ? void navigate({
-          to: "/recherche/$id",
-          params: { id: "neu" },
-          search: { frage: text },
+          to: "/research/$id",
+          params: { id: "new" },
+          search: { q: text },
         })
       : void navigate({
           to: "/screens/$screenId",
-          params: { screenId: "neu" },
+          params: { screenId: "new" },
           search: { q: text },
           viewTransition: true,
         })

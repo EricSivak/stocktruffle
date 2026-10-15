@@ -12,14 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
-import { Route as AppEinstellungenRouteImport } from './routes/_app/einstellungen'
-import { Route as AppSignaleRouteImport } from './routes/_app/signale'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
+import { Route as AppSignalsRouteImport } from './routes/_app/signals'
 import { Route as AppStyleguideRouteImport } from './routes/_app/styleguide'
 import { Route as AppTrackingRouteImport } from './routes/_app/tracking'
-import { Route as AppAktieSymbolRouteImport } from './routes/_app/aktie.$symbol'
-import { Route as AppRechercheIdRouteImport } from './routes/_app/recherche.$id'
+import { Route as AppResearchIdRouteImport } from './routes/_app/research.$id'
 import { Route as AppScreensIndexRouteImport } from './routes/_app/screens.index'
 import { Route as AppScreensScreenIdRouteImport } from './routes/_app/screens.$screenId'
+import { Route as AppStocksSymbolRouteImport } from './routes/_app/stocks.$symbol'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -35,14 +35,14 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppEinstellungenRoute = AppEinstellungenRouteImport.update({
-  id: '/einstellungen',
-  path: '/einstellungen',
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
-const AppSignaleRoute = AppSignaleRouteImport.update({
-  id: '/signale',
-  path: '/signale',
+const AppSignalsRoute = AppSignalsRouteImport.update({
+  id: '/signals',
+  path: '/signals',
   getParentRoute: () => AppRoute,
 } as any)
 const AppStyleguideRoute = AppStyleguideRouteImport.update({
@@ -55,14 +55,9 @@ const AppTrackingRoute = AppTrackingRouteImport.update({
   path: '/tracking',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAktieSymbolRoute = AppAktieSymbolRouteImport.update({
-  id: '/aktie/$symbol',
-  path: '/aktie/$symbol',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppRechercheIdRoute = AppRechercheIdRouteImport.update({
-  id: '/recherche/$id',
-  path: '/recherche/$id',
+const AppResearchIdRoute = AppResearchIdRouteImport.update({
+  id: '/research/$id',
+  path: '/research/$id',
   getParentRoute: () => AppRoute,
 } as any)
 const AppScreensIndexRoute = AppScreensIndexRouteImport.update({
@@ -75,43 +70,48 @@ const AppScreensScreenIdRoute = AppScreensScreenIdRouteImport.update({
   path: '/screens/$screenId',
   getParentRoute: () => AppRoute,
 } as any)
+const AppStocksSymbolRoute = AppStocksSymbolRouteImport.update({
+  id: '/stocks/$symbol',
+  path: '/stocks/$symbol',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/login': typeof LoginRoute
-  '/einstellungen': typeof AppEinstellungenRoute
-  '/signale': typeof AppSignaleRoute
+  '/settings': typeof AppSettingsRoute
+  '/signals': typeof AppSignalsRoute
   '/styleguide': typeof AppStyleguideRoute
   '/tracking': typeof AppTrackingRoute
-  '/aktie/$symbol': typeof AppAktieSymbolRoute
-  '/recherche/$id': typeof AppRechercheIdRoute
+  '/research/$id': typeof AppResearchIdRoute
   '/screens/$screenId': typeof AppScreensScreenIdRoute
+  '/stocks/$symbol': typeof AppStocksSymbolRoute
   '/screens/': typeof AppScreensIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
-  '/einstellungen': typeof AppEinstellungenRoute
-  '/signale': typeof AppSignaleRoute
+  '/settings': typeof AppSettingsRoute
+  '/signals': typeof AppSignalsRoute
   '/styleguide': typeof AppStyleguideRoute
   '/tracking': typeof AppTrackingRoute
   '/': typeof AppIndexRoute
-  '/aktie/$symbol': typeof AppAktieSymbolRoute
-  '/recherche/$id': typeof AppRechercheIdRoute
+  '/research/$id': typeof AppResearchIdRoute
   '/screens/$screenId': typeof AppScreensScreenIdRoute
+  '/stocks/$symbol': typeof AppStocksSymbolRoute
   '/screens': typeof AppScreensIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
-  '/_app/einstellungen': typeof AppEinstellungenRoute
-  '/_app/signale': typeof AppSignaleRoute
+  '/_app/settings': typeof AppSettingsRoute
+  '/_app/signals': typeof AppSignalsRoute
   '/_app/styleguide': typeof AppStyleguideRoute
   '/_app/tracking': typeof AppTrackingRoute
   '/_app/': typeof AppIndexRoute
-  '/_app/aktie/$symbol': typeof AppAktieSymbolRoute
-  '/_app/recherche/$id': typeof AppRechercheIdRoute
+  '/_app/research/$id': typeof AppResearchIdRoute
   '/_app/screens/$screenId': typeof AppScreensScreenIdRoute
+  '/_app/stocks/$symbol': typeof AppStocksSymbolRoute
   '/_app/screens/': typeof AppScreensIndexRoute
 }
 export interface FileRouteTypes {
@@ -119,38 +119,38 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
-    | '/einstellungen'
-    | '/signale'
+    | '/settings'
+    | '/signals'
     | '/styleguide'
     | '/tracking'
-    | '/aktie/$symbol'
-    | '/recherche/$id'
+    | '/research/$id'
     | '/screens/$screenId'
+    | '/stocks/$symbol'
     | '/screens/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
-    | '/einstellungen'
-    | '/signale'
+    | '/settings'
+    | '/signals'
     | '/styleguide'
     | '/tracking'
     | '/'
-    | '/aktie/$symbol'
-    | '/recherche/$id'
+    | '/research/$id'
     | '/screens/$screenId'
+    | '/stocks/$symbol'
     | '/screens'
   id:
     | '__root__'
     | '/_app'
     | '/login'
-    | '/_app/einstellungen'
-    | '/_app/signale'
+    | '/_app/settings'
+    | '/_app/signals'
     | '/_app/styleguide'
     | '/_app/tracking'
     | '/_app/'
-    | '/_app/aktie/$symbol'
-    | '/_app/recherche/$id'
+    | '/_app/research/$id'
     | '/_app/screens/$screenId'
+    | '/_app/stocks/$symbol'
     | '/_app/screens/'
   fileRoutesById: FileRoutesById
 }
@@ -182,18 +182,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/einstellungen': {
-      id: '/_app/einstellungen'
-      path: '/einstellungen'
-      fullPath: '/einstellungen'
-      preLoaderRoute: typeof AppEinstellungenRouteImport
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/signale': {
-      id: '/_app/signale'
-      path: '/signale'
-      fullPath: '/signale'
-      preLoaderRoute: typeof AppSignaleRouteImport
+    '/_app/signals': {
+      id: '/_app/signals'
+      path: '/signals'
+      fullPath: '/signals'
+      preLoaderRoute: typeof AppSignalsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/styleguide': {
@@ -210,18 +210,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTrackingRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/aktie/$symbol': {
-      id: '/_app/aktie/$symbol'
-      path: '/aktie/$symbol'
-      fullPath: '/aktie/$symbol'
-      preLoaderRoute: typeof AppAktieSymbolRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/recherche/$id': {
-      id: '/_app/recherche/$id'
-      path: '/recherche/$id'
-      fullPath: '/recherche/$id'
-      preLoaderRoute: typeof AppRechercheIdRouteImport
+    '/_app/research/$id': {
+      id: '/_app/research/$id'
+      path: '/research/$id'
+      fullPath: '/research/$id'
+      preLoaderRoute: typeof AppResearchIdRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/screens/': {
@@ -238,30 +231,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppScreensScreenIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/stocks/$symbol': {
+      id: '/_app/stocks/$symbol'
+      path: '/stocks/$symbol'
+      fullPath: '/stocks/$symbol'
+      preLoaderRoute: typeof AppStocksSymbolRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
-  AppEinstellungenRoute: typeof AppEinstellungenRoute
-  AppSignaleRoute: typeof AppSignaleRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppSignalsRoute: typeof AppSignalsRoute
   AppStyleguideRoute: typeof AppStyleguideRoute
   AppTrackingRoute: typeof AppTrackingRoute
   AppIndexRoute: typeof AppIndexRoute
-  AppAktieSymbolRoute: typeof AppAktieSymbolRoute
-  AppRechercheIdRoute: typeof AppRechercheIdRoute
+  AppResearchIdRoute: typeof AppResearchIdRoute
   AppScreensScreenIdRoute: typeof AppScreensScreenIdRoute
+  AppStocksSymbolRoute: typeof AppStocksSymbolRoute
   AppScreensIndexRoute: typeof AppScreensIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppEinstellungenRoute: AppEinstellungenRoute,
-  AppSignaleRoute: AppSignaleRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppSignalsRoute: AppSignalsRoute,
   AppStyleguideRoute: AppStyleguideRoute,
   AppTrackingRoute: AppTrackingRoute,
   AppIndexRoute: AppIndexRoute,
-  AppAktieSymbolRoute: AppAktieSymbolRoute,
-  AppRechercheIdRoute: AppRechercheIdRoute,
+  AppResearchIdRoute: AppResearchIdRoute,
   AppScreensScreenIdRoute: AppScreensScreenIdRoute,
+  AppStocksSymbolRoute: AppStocksSymbolRoute,
   AppScreensIndexRoute: AppScreensIndexRoute,
 }
 

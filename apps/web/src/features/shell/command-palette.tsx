@@ -17,11 +17,11 @@ import { allCompanies } from "@/prototype/fixtures/companies"
 import { screens } from "@/prototype/fixtures/screens"
 
 const pages = [
-  { to: "/", label: "Suche" },
+  { to: "/", label: "Search" },
   { to: "/screens", label: "Screens" },
   { to: "/tracking", label: "Tracking" },
-  { to: "/signale", label: "Signale" },
-  { to: "/einstellungen", label: "Einstellungen" },
+  { to: "/signals", label: "Signals" },
+  { to: "/settings", label: "Settings" },
 ] as const
 
 export function CommandPalette({
@@ -43,14 +43,14 @@ export function CommandPalette({
     <CommandDialog
       open={open}
       onOpenChange={onOpenChange}
-      title="Befehle"
-      description="Seite, Aktie oder Befehl suchen"
+      title="Commands"
+      description="Search for a page, stock or command"
     >
       <Command>
-        <CommandInput placeholder="Seite, Aktie oder Befehl" />
+        <CommandInput placeholder="Page, stock or command" />
         <CommandList>
           <CommandEmpty>Nichts gefunden.</CommandEmpty>
-          <CommandGroup heading="Gehe zu">
+          <CommandGroup heading="Go to">
             {pages.map((page) => (
               <CommandItem
                 key={page.to}
@@ -77,7 +77,7 @@ export function CommandPalette({
               </CommandItem>
             ))}
           </CommandGroup>
-          <CommandGroup heading="Aktien">
+          <CommandGroup heading="Stocks">
             {allCompanies.map((company) => (
               <CommandItem
                 key={company.symbol}
@@ -85,7 +85,7 @@ export function CommandPalette({
                 onSelect={run(
                   () =>
                     void navigate({
-                      to: "/aktie/$symbol",
+                      to: "/stocks/$symbol",
                       params: { symbol: company.symbol },
                     })
                 )}
@@ -97,24 +97,24 @@ export function CommandPalette({
               </CommandItem>
             ))}
           </CommandGroup>
-          <CommandGroup heading="Aktionen">
+          <CommandGroup heading="Actions">
             <CommandItem onSelect={run(() => agent.setOpen(true))}>
-              Agent öffnen
+              Open agent
               <CommandShortcut>
                 <KbdGroup>
-                  <Kbd>Strg</Kbd>
+                  <Kbd>Ctrl</Kbd>
                   <Kbd>J</Kbd>
                 </KbdGroup>
               </CommandShortcut>
             </CommandItem>
             <CommandItem onSelect={run(() => void navigate({ to: "/" }))}>
-              Neue Recherche
+              New research
             </CommandItem>
             <CommandItem onSelect={run(() => setTheme("light"))}>
-              Helles Design
+              Light theme
             </CommandItem>
             <CommandItem onSelect={run(() => setTheme("dark"))}>
-              Dunkles Design
+              Dark theme
             </CommandItem>
           </CommandGroup>
         </CommandList>

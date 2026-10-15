@@ -25,60 +25,60 @@ export type Research = {
 }
 
 const sources: [string, string][] = [
-  ["Halvard Systems: Geschäftsbericht 2025", "Unternehmensbericht, PDF"],
-  ["Rahmenverträge der Streitkräfte 2026", "Fachpresse, 12.09.2026"],
-  ["Brixen Optik: Quartalsbericht Q2", "Unternehmensbericht"],
-  ["Verteidigungsetats in Europa", "Analyse, 05.09.2026"],
-  ["Ostmark Avionik: Unternehmenspräsentation", "Unternehmensbericht, PDF"],
-  ["Teralis: Halbjahresbericht 2026", "Unternehmensbericht, PDF"],
-  ["EU-Verteidigungsprogramm 2025–2030", "Fachpresse, 28.08.2026"],
-  ["Nachfrage nach Rüstungselektronik steigt", "Fachpresse, 14.08.2026"],
-  ["Halvard Systems erhält Folgeauftrag", "Unternehmensmitteilung, 02.08.2026"],
-  ["Brixen Optik expandiert in Skandinavien", "Fachpresse, 21.07.2026"],
-  ["Ostmark Avionik: Halbjahresbericht 2026", "Unternehmensbericht, PDF"],
-  ["Teralis gewinnt Ausschreibung für Radarsysteme", "Fachpresse, 18.07.2026"],
+  ["Halvard Systems: Annual report 2025", "Company report, PDF"],
+  ["Armed forces framework contracts 2026", "Trade press, 12/09/2026"],
+  ["Brixen Optik: Q2 quarterly report", "Company report"],
+  ["Defence budgets in Europe", "Analysis, 05/09/2026"],
+  ["Ostmark Avionik: Company presentation", "Company report, PDF"],
+  ["Teralis: Half-year report 2026", "Company report, PDF"],
+  ["EU defence programme 2025–2030", "Trade press, 28/08/2026"],
+  ["Demand for defence electronics rises", "Trade press, 14/08/2026"],
   [
-    "Zulieferketten der europäischen Verteidigungsindustrie",
-    "Analyse, 10.07.2026",
+    "Halvard Systems wins a follow-on order",
+    "Company announcement, 02/08/2026",
   ],
-  ["Halvard Systems: Kapitalmarkttag 2026", "Unternehmensbericht, PDF"],
-  ["Optronik und Sensorik: Kapazitäten werden knapp", "Fachpresse, 30.06.2026"],
-  ["Brixen Optik: Geschäftsbericht 2025", "Unternehmensbericht, PDF"],
-  ["Ziele für Verteidigungsausgaben nach dem Gipfel", "Analyse, 26.06.2026"],
-  ["Ostmark Avionik erweitert die Fertigung", "Fachpresse, 19.06.2026"],
+  ["Brixen Optik expands into Scandinavia", "Trade press, 21/07/2026"],
+  ["Ostmark Avionik: Half-year report 2026", "Company report, PDF"],
+  ["Teralis wins a tender for radar systems", "Trade press, 18/07/2026"],
+  ["Supply chains of the European defence industry", "Analysis, 10/07/2026"],
+  ["Halvard Systems: Capital markets day 2026", "Company report, PDF"],
+  ["Optronics and sensors: capacity runs short", "Trade press, 30/06/2026"],
+  ["Brixen Optik: Annual report 2025", "Company report, PDF"],
+  ["Defence spending targets after the summit", "Analysis, 26/06/2026"],
+  ["Ostmark Avionik expands production", "Trade press, 19/06/2026"],
   [
-    "Teralis: Auftragsbestand auf Rekordniveau",
-    "Unternehmensmitteilung, 12.06.2026",
+    "Teralis: Order backlog at a record high",
+    "Company announcement, 12/06/2026",
   ],
-  ["Kleinere Rüstungswerte im Vergleich", "Analyse, 04.06.2026"],
-  ["Exportgenehmigungen für Rüstungsgüter 2025", "Fachpresse, 28.05.2026"],
-  ["Halvard Systems: Quartalsbericht Q1", "Unternehmensbericht"],
+  ["Smaller defence stocks compared", "Analysis, 04/06/2026"],
+  ["Export licences for defence goods 2025", "Trade press, 28/05/2026"],
+  ["Halvard Systems: Q1 quarterly report", "Company report"],
   [
-    "Beschaffung vergibt mehr Aufträge an den Mittelstand",
-    "Fachpresse, 15.05.2026",
+    "Procurement awards more contracts to mid-sized firms",
+    "Trade press, 15/05/2026",
   ],
 ]
 
 export const defenceResearch: Research = {
   id: "demo",
-  title: "Rüstungszulieferer unter 2 Mrd €",
+  title: "Defence suppliers under €2bn",
   question:
-    "Welche europäischen Rüstungszulieferer unter 2 Mrd € profitieren am stärksten von höheren Verteidigungsetats?",
+    "Which European defence suppliers under €2bn gain most from higher defence budgets?",
   durationSeconds: 100,
-  summary: "31 Titel gescreent · 8 recherchiert · 4 ausgewählt",
+  summary: "31 stocks screened · 8 researched · 4 selected",
   steps: [
-    "Screen: Luftfahrt und Verteidigung, Europa, Marktkap. unter 2 Mrd € · 31 Titel",
-    "Geschäftsberichte und Präsentationen von 8 Titeln gelesen",
-    "Rüstungsanteil und Auftragsbestand verglichen",
-    "4 Titel mit mehr als der Hälfte Rüstungsumsatz und mehr als zwei Jahren Bestand ausgewählt",
+    "Screen: aerospace and defence, Europe, market cap under €2bn · 31 stocks",
+    "Read the annual reports and presentations of 8 stocks",
+    "Compared defence share and order backlog",
+    "Selected 4 stocks with more than half their revenue from defence and over two years of backlog",
   ],
-  heading: "Vier Titel stechen heraus",
+  heading: "Four stocks stand out",
   answer: [
-    "Alle vier erzielen mehr als die Hälfte ihres Umsatzes mit Verteidigung und haben Aufträge für mehr als zwei Jahre im Bestand.",
+    "All four earn more than half their revenue from defence and hold orders for more than two years.",
     { footnote: 1 },
-    " Am klarsten ist das Bild bei Halvard Systems, wo zwei Rahmenverträge bis 2030 laufen.",
+    " The picture is clearest at Halvard Systems, where two framework contracts run until 2030.",
     { footnote: 2 },
-    " Brixen Optik ist am kleinsten, wächst aber am schnellsten.",
+    " Brixen Optik is the smallest but grows fastest.",
     { footnote: 3 },
   ],
   rows: [
@@ -88,7 +88,7 @@ export const defenceResearch: Research = {
     { symbol: "TRL.PA", defenceShare: 0.58, backlog: 2.0 },
   ],
   unverified:
-    "Für 2 der 8 recherchierten Titel gab es keine belastbaren Angaben zum Auftragsbestand.",
+    "For 2 of the 8 researched stocks there was no reliable figure for the order backlog.",
   sources: sources.map(([title, detail], index) => ({
     n: index + 1,
     title,
@@ -98,10 +98,10 @@ export const defenceResearch: Research = {
 
 /** The steps a new question walks through while the prototype plays the running state. */
 export const runningSteps = [
-  "Frage verstanden",
-  "Passende Titel gescreent",
-  "Quellen gesucht",
-  "Quellen gelesen",
+  "Question understood",
+  "Matching stocks screened",
+  "Sources searched",
+  "Sources read",
 ]
 
 export function researchById(id: string): Research | undefined {

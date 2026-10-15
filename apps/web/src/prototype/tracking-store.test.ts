@@ -9,10 +9,10 @@ afterEach(() => tracking.reset())
 
 describe("tracking store", () => {
   it("tracks a stock at today's price and undoes it", () => {
-    const undo = tracking.track(corvara, { thesis: "Günstig." })
+    const undo = tracking.track(corvara, { thesis: "Cheap." })
     expect(tracking.find("CRV.MI")).toMatchObject({
       trackedPrice: corvara.price,
-      thesis: "Günstig.",
+      thesis: "Cheap.",
     })
     expect(tracking.track(corvara)).toBeNull()
     undo?.()
@@ -36,11 +36,11 @@ describe("tracking store", () => {
   })
 
   it("adds signals and changes the thesis", () => {
-    tracking.addSignal("LKS.HE", "Zellstoffpreis fällt")
-    tracking.setThesis("LKS.HE", "Holz wird knapp.")
+    tracking.addSignal("LKS.HE", "Pulp price falls")
+    tracking.setThesis("LKS.HE", "Timber is getting scarce.")
     expect(tracking.find("LKS.HE")).toMatchObject({
-      thesis: "Holz wird knapp.",
-      signals: [{ text: "Zellstoffpreis fällt", rhythm: "täglich" }],
+      thesis: "Timber is getting scarce.",
+      signals: [{ text: "Pulp price falls", rhythm: "daily" }],
     })
   })
 })

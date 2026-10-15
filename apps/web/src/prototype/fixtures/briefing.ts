@@ -1,4 +1,4 @@
-// "Seit gestern" on the start page: what changed among the screens and tracked stocks.
+// "Since yesterday" on the start page: what changed among the screens and tracked stocks.
 import { AS_OF_TIME } from "./calendar"
 import { companyBySymbol } from "./companies"
 
@@ -22,21 +22,21 @@ export const briefing: BriefingItem[] = [
   },
   {
     id: "new-hits",
-    text: "3 neue Titel in Europa Small Caps",
-    note: `seit ${AS_OF_TIME}`,
-    to: { kind: "screen", screenId: "europa-small-caps" },
+    text: "3 new stocks in Europe Small Caps",
+    note: `since ${AS_OF_TIME}`,
+    to: { kind: "screen", screenId: "europe-small-caps" },
   },
   {
     id: "altmeer",
-    text: "Altmeer Mesure meldet Quartalszahlen",
-    note: "morgen",
+    text: "Altmeer Mesure reports quarterly results",
+    note: "tomorrow",
     to: { kind: "stock", symbol: "ALM.PA" },
   },
 ]
 
 /** The examples under the start page's search field. */
 export const searchExamples = [
-  "Profitable Small Caps in Europa, KGV unter 15",
-  "Wie ASML, nur kleiner und günstiger",
-  "Warum fällt Rheinmetall heute?",
+  "Profitable small caps in Europe, P/E under 15",
+  "Like ASML, only smaller and cheaper",
+  "Why is Rheinmetall falling today?",
 ]

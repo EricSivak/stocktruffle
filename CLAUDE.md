@@ -4,7 +4,7 @@ Text-to-stocks screener with a research agent, run locally for one user. The ful
 
 ## Working with Eric
 
-- He writes German: answer in German. UI copy is German; code, comments and commit messages are English.
+- He writes German: answer in German. The app is English (UI copy, URLs, search parameters, sample data); docs in `docs/` stay German; code, comments and commit messages are English.
 - The UI must look crafted, not generated. Nothing visual counts as done before he has approved it on the prototype.
 - Build UI from shadcn components through the shadcn MCP server (`.mcp.json`); don't hand-roll what the registry has.
 
@@ -36,7 +36,7 @@ The first coded prototype (monochrome, Geist Mono numbers) was rejected as ugly 
 
 - Approved by Eric: the logo "Monogramm" (lowercase serif t with a stepped crossbar and a gold dot inside a truffle-shaped blob) and the login screen (`docs/design/mockups-v1/03-login.webp`).
 - Warm paper background, ink text, moss and terracotta only for change, truffle gold only for the logo dot and the selected-row marker; warm brown-black dark theme.
-- One sans for UI and every number (tabular figures, German format); serif only for page titles at 24 px and for prose (agent answers, memos, theses).
+- One sans for UI and every number (tabular figures, British format: `1,234.5`, `18.2%`, `€42.18`, `09/10/2026`); serif only for page titles at 24 px and for prose (agent answers, memos, theses).
 - Flat: at most one surface level, no shadows on content, 6 px corners, one primary button per view, text buttons without icons.
 - Never: eyebrow labels, gold labels, KPI number blocks, initials avatars, gradient fills under lines, chat bubbles, pills, decorative textures (login excepted), keyboard-shortcut bars.
 - Motion only where it explains; keyboard first; every state designed (loading, empty, error, stale).

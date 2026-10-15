@@ -14,6 +14,8 @@ Der erste Prototyp (einfarbig, Geist Mono) wurde verworfen. Danach sind in zwei 
 
 ## Entscheidungen
 
+> **Stand 14.10.2026:** Die App ist inzwischen englisch: Oberfläche, Pfade (`/stocks`, `/research`, `/signals`, `/settings`), Suchparameter (`?state=`, `?view=`, `?q=`) und Beispieldaten; Zahlen im britischen Format. Die deutschen Bezeichnungen in diesem Dokument beschreiben dieselben Stellen.
+
 Mit meiner Empfehlung; bitte bestätigen oder ändern.
 
 1. **Schriften:** Newsreader (Serif, mit Kursiv und optischen Größen) und Inter (Grotesk, mit Tabellenziffern). Beide kostenlos und den Mockups sehr nah. Geist, Geist Mono, IBM Plex und der Schrift-Umschalter fliegen raus.

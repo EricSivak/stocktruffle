@@ -20,13 +20,13 @@ const blurSearch = (view) => view.evaluate(() => document.activeElement?.blur())
 const PAGES = [
   { name: "01-start", path: "/", theme: "light", ready: "main form[role=search]", prepare: blurSearch, mockup: "01-start.webp" },
   { name: "01-start-dunkel", path: "/", theme: "dark", ready: "main form[role=search]", prepare: blurSearch },
-  { name: "02-screen-mit-agent", path: "/screens/europa-small-caps", agent: true, theme: "light", prepare: selectSecondRow, mockup: "02-screen-mit-agent.webp" },
-  { name: "06-screen-dunkel", path: "/screens/europa-small-caps", agent: false, theme: "dark", prepare: selectSecondRow, mockup: "06-screen-dunkel.webp" },
-  { name: "02-screen-dunkel-mit-agent", path: "/screens/europa-small-caps", agent: true, theme: "dark", prepare: selectSecondRow },
-  { name: "03-recherche", path: "/recherche/demo", theme: "light", mockup: "03-recherche.webp" },
-  { name: "03-recherche-dunkel", path: "/recherche/demo", theme: "dark" },
-  { name: "04-aktie", path: "/aktie/NWT.DE", theme: "light", mockup: "04-aktie.webp" },
-  { name: "04-aktie-dunkel", path: "/aktie/NWT.DE", theme: "dark" },
+  { name: "02-screen-mit-agent", path: "/screens/europe-small-caps", agent: true, theme: "light", prepare: selectSecondRow, mockup: "02-screen-mit-agent.webp" },
+  { name: "06-screen-dunkel", path: "/screens/europe-small-caps", agent: false, theme: "dark", prepare: selectSecondRow, mockup: "06-screen-dunkel.webp" },
+  { name: "02-screen-dunkel-mit-agent", path: "/screens/europe-small-caps", agent: true, theme: "dark", prepare: selectSecondRow },
+  { name: "03-recherche", path: "/research/demo", theme: "light", mockup: "03-recherche.webp" },
+  { name: "03-recherche-dunkel", path: "/research/demo", theme: "dark" },
+  { name: "04-aktie", path: "/stocks/NWT.DE", theme: "light", mockup: "04-aktie.webp" },
+  { name: "04-aktie-dunkel", path: "/stocks/NWT.DE", theme: "dark" },
   { name: "05-tracking", path: "/tracking", theme: "light", prepare: openHausberg, mockup: "05-tracking.webp" },
   { name: "05-tracking-dunkel", path: "/tracking", theme: "dark", prepare: openHausberg },
   { name: "styleguide", path: "/styleguide", agent: false, theme: "light", fullPage: true },
@@ -42,7 +42,7 @@ async function deleteUser(status, userId) {
     method: "DELETE",
     headers: { apikey: status.SECRET_KEY, Authorization: `Bearer ${status.SECRET_KEY}` },
   })
-  if (!response.ok) throw new Error(`Testkonto nicht gelöscht: ${response.status}`)
+  if (!response.ok) throw new Error(`Test account not deleted: ${response.status}`)
 }
 
 const status = supabaseStatus()
@@ -54,7 +54,7 @@ const signup = await fetch(`${status.API_URL}/auth/v1/signup`, {
   body: JSON.stringify({ email, password }),
 })
 const account = await signup.json()
-if (!signup.ok) throw new Error(`Testkonto nicht angelegt: ${JSON.stringify(account)}`)
+if (!signup.ok) throw new Error(`Test account not created: ${JSON.stringify(account)}`)
 const userId = account.user?.id ?? account.id
 
 mkdirSync(OUT, { recursive: true })
@@ -64,9 +64,9 @@ try {
   const login = await browser.newContext({ viewport: VIEWPORT })
   const page = await login.newPage()
   await page.goto(`${BASE}/login`)
-  await page.getByLabel("E-Mail").fill(email)
-  await page.getByLabel("Passwort").fill(password)
-  await page.getByRole("button", { name: "Anmelden" }).click()
+  await page.getByLabel("Email").fill(email)
+  await page.getByLabel("Password").fill(password)
+  await page.getByRole("button", { name: "Sign in" }).click()
   await page.waitForURL(`${BASE}/`)
   await page.locator("main form[role=search]").waitFor()
   const storageState = await login.storageState()

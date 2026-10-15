@@ -36,20 +36,20 @@ export function KeyFigures({
   details: StockDetails
 }) {
   const rows: [string, React.ReactNode][] = [
-    ["Marktkap.", formatCompact(company.marketCapEur, "EUR")],
-    ["KGV", formatNumber(company.pe, 1)],
-    ["KGV erwartet", formatNumber(details.forwardPe, 1)],
+    ["Market cap", formatCompact(company.marketCapEur, "EUR")],
+    ["P/E", formatNumber(company.pe, 1)],
+    ["Forward P/E", formatNumber(details.forwardPe, 1)],
     ["EV/EBITDA", formatNumber(details.evToEbitda, 1)],
-    ["Umsatzwachstum", <Change key="growth" value={company.revenueGrowth} />],
-    ["Nettomarge", formatPercent(company.netMargin)],
-    ["FCF-Rendite", formatPercent(company.fcfYield)],
-    ["Dividendenrendite", formatPercent(company.dividendYield)],
-    ["52-Wochen-Spanne", <YearRange key="range" company={company} />],
+    ["Revenue growth", <Change key="growth" value={company.revenueGrowth} />],
+    ["Net margin", formatPercent(company.netMargin)],
+    ["FCF yield", formatPercent(company.fcfYield)],
+    ["Dividend yield", formatPercent(company.dividendYield)],
+    ["52-week range", <YearRange key="range" company={company} />],
   ]
   return (
     <section aria-labelledby="key-figures">
       <h2 id="key-figures" className="border-b pb-2 text-[15px] font-medium">
-        Kennzahlen
+        Key figures
       </h2>
       <dl className="divide-y">
         {rows.map(([term, value]) => (

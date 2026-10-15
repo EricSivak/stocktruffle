@@ -32,12 +32,12 @@ function Preview({
   onTrack: () => void
 }) {
   const facts: [string, string][] = [
-    ["Marktkap.", formatCompact(company.marketCapEur, "EUR")],
-    ["KGV", formatNumber(company.pe, 1)],
-    ["Umsatz Δ", formatPercent(company.revenueGrowth, { signed: true })],
-    ["Nettomarge", formatPercent(company.netMargin)],
-    ["FCF-Rendite", formatPercent(company.fcfYield)],
-    ["Dividende", formatPercent(company.dividendYield)],
+    ["Market cap", formatCompact(company.marketCapEur, "EUR")],
+    ["P/E", formatNumber(company.pe, 1)],
+    ["Revenue Δ", formatPercent(company.revenueGrowth, { signed: true })],
+    ["Net margin", formatPercent(company.netMargin)],
+    ["FCF yield", formatPercent(company.fcfYield)],
+    ["Dividend", formatPercent(company.dividendYield)],
   ]
   return (
     <div className="flex items-center gap-8 py-3 whitespace-normal">
@@ -58,10 +58,10 @@ function Preview({
       </dl>
       <div className="flex shrink-0 gap-5">
         <Button variant="plain" onClick={onOpen}>
-          Öffnen
+          Open
         </Button>
         <Button variant="plain" onClick={onTrack}>
-          Tracken
+          Track
         </Button>
       </div>
     </div>
@@ -212,7 +212,7 @@ export function TableSkeleton({ rows = 10 }: { rows?: number }) {
     <div
       className="overflow-hidden rounded-lg border border-input bg-card"
       aria-busy="true"
-      aria-label="Lädt"
+      aria-label="Loading"
     >
       <div className="h-8 border-b" />
       {Array.from({ length: rows }, (_, index) => (

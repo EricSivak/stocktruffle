@@ -25,12 +25,12 @@ export function AgentPanel() {
       <header className="flex h-14 shrink-0 items-center gap-3 pr-3 pl-5">
         <h2 className="text-sm font-medium">Agent</h2>
         <span className="ml-auto text-xs text-muted-foreground">
-          {context?.label ?? "sieht diese Seite"}
+          {context?.label ?? "sees this page"}
         </span>
         <Button
           variant="ghost"
           size="icon-sm"
-          aria-label="Agent schließen"
+          aria-label="Close agent"
           onClick={() => setOpen(false)}
         >
           <XIcon strokeWidth={1.6} />
@@ -43,8 +43,8 @@ export function AgentPanel() {
             <Thread items={thread} />
           ) : (
             <p className="text-muted-foreground">
-              Frag zu dem, was du gerade siehst. Der Agent kennt diese Seite,
-              deine Screens und dein Tracking.
+              Ask about what you're looking at. The agent knows this page, your
+              screens and your tracking.
             </p>
           )}
         </div>
@@ -52,22 +52,22 @@ export function AgentPanel() {
 
       <div className="p-4">
         <Composer
-          placeholder={context?.placeholder ?? "Frag zu dieser Seite"}
+          placeholder={context?.placeholder ?? "Ask about this page"}
           research={research}
           onResearchChange={setResearch}
           onSubmit={(question) => {
             if (research) {
               void navigate({
-                to: "/recherche/$id",
-                params: { id: "neu" },
-                search: { frage: question },
+                to: "/research/$id",
+                params: { id: "new" },
+                search: { q: question },
               })
               return
             }
             setAsked((items) => [
               ...items,
               { kind: "question", text: question },
-              { kind: "pending", text: "Antwort folgt in Phase 3" },
+              { kind: "pending", text: "Answer arrives in phase 3" },
             ])
           }}
         />

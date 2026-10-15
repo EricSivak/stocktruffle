@@ -27,7 +27,7 @@ function Bars({ periods }: { periods: Period[] }) {
       aria-label={periods
         .map(
           (period) =>
-            `${period.label}: Umsatz ${formatNumber(period.revenue, 0)}, EBIT ${formatNumber(period.ebit, 0)} Mio €`
+            `${period.label}: revenue €${formatNumber(period.revenue, 0)}m, EBIT €${formatNumber(period.ebit, 0)}m`
         )
         .join("; ")}
     >
@@ -94,7 +94,7 @@ export function Financials({ details }: { details: StockDetails }) {
     <section aria-labelledby="financials">
       <div className="flex items-baseline border-b pb-2">
         <h2 id="financials" className="text-[15px] font-medium">
-          Finanzen
+          Financials
         </h2>
         <Tabs
           value={view}
@@ -102,8 +102,8 @@ export function Financials({ details }: { details: StockDetails }) {
           className="ml-auto"
         >
           <TabsList variant="line">
-            <TabsTrigger value="annual">Jährlich</TabsTrigger>
-            <TabsTrigger value="quarterly">Quartal</TabsTrigger>
+            <TabsTrigger value="annual">Annual</TabsTrigger>
+            <TabsTrigger value="quarterly">Quarterly</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
@@ -113,13 +113,13 @@ export function Financials({ details }: { details: StockDetails }) {
       <p className="mt-4 flex items-center gap-5 text-xs text-muted-foreground">
         <span className="flex items-center gap-2">
           <span className="size-2.5 bg-foreground" aria-hidden="true" />
-          Umsatz
+          Revenue
         </span>
         <span className="flex items-center gap-2">
           <span className="size-2.5 bg-chart-2" aria-hidden="true" />
           EBIT
         </span>
-        <span>in Mio €</span>
+        <span>in €m</span>
       </p>
     </section>
   )

@@ -14,7 +14,7 @@ export function ComingSoon({
     <div className="mx-auto max-w-5xl px-8 pt-10">
       <PageHeader title={title} />
       <p className="mt-3 text-muted-foreground">
-        Diese Seite entsteht in Schritt {step} des Prototyps.
+        This page arrives in step {step} of the prototype.
       </p>
       {children}
     </div>

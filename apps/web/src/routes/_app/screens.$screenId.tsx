@@ -33,27 +33,27 @@ import {
   type SavedScreen,
 } from "@/prototype/fixtures/screens"
 
-type ScreenState = "laden" | "leer" | "fehler" | "veraltet"
-const STATES: ScreenState[] = ["laden", "leer", "fehler", "veraltet"]
+type ScreenState = "loading" | "empty" | "error" | "stale"
+const STATES: ScreenState[] = ["loading", "empty", "error", "stale"]
 
 export const Route = createFileRoute("/_app/screens/$screenId")({
-  // ?q=… is the query of a new, unsaved screen (/screens/neu). ?zustand=… shows the loading,
+  // ?q=… is the query of a new, unsaved screen (/screens/new). ?state=… shows the loading,
   // empty, error and stale designs; only for review in development.
   validateSearch: (
     search: Record<string, unknown>
-  ): { q?: string; zustand?: ScreenState } => {
-    const state = search.zustand
+  ): { q?: string; state?: ScreenState } => {
+    const state = search.state
     return {
       ...(typeof search.q === "string" && { q: search.q }),
       ...(import.meta.env.DEV &&
         STATES.includes(state as ScreenState) && {
-          zustand: state as ScreenState,
+          state: state as ScreenState,
         }),
     }
   },
   loaderDeps: ({ search }) => ({ q: search.q }),
   loader: ({ params, deps }) => {
-    if (params.screenId === "neu") return draftScreen(deps.q ?? "")
+    if (params.screenId === "new") return draftScreen(deps.q ?? "")
     const screen = screenById(params.screenId)
     if (!screen) throw notFound()
     return screen
@@ -62,9 +62,9 @@ export const Route = createFileRoute("/_app/screens/$screenId")({
 })
 
 const AGENT_CONTEXT = {
-  label: "sieht diesen Screen",
+  label: "sees this screen",
   thread: screenThread,
-  placeholder: "Frag zu diesem Screen",
+  placeholder: "Ask about this screen",
 }
 const HIDEABLE = columns.filter((column) => column.id !== "name")
 
@@ -74,22 +74,22 @@ function MetaLine({ rows, stale }: { rows: Company[]; stale: boolean }) {
     <p className="text-xs text-muted-foreground">
       {stale && (
         <>
-          Stand gestern, 17:35 ·{" "}
+          As of yesterday, 17:35 ·{" "}
           <button
             type="button"
             className="text-foreground underline underline-offset-3"
           >
-            Aktualisieren
+            Refresh
           </button>
           {" · "}
         </>
       )}
-      {summary.count} Treffer · Ø KGV {formatNumber(summary.averagePe, 1)} · Ø
-      Umsatzwachstum{" "}
+      {summary.count} hits · Avg. P/E {formatNumber(summary.averagePe, 1)} ·
+      Avg. revenue growth{" "}
       <span className="text-gain">
         {formatPercent(summary.averageRevenueGrowth, { signed: true })}
       </span>{" "}
-      · Median Marktkap. {formatCompact(summary.medianMarketCap, "EUR")}
+      · Median market cap {formatCompact(summary.medianMarketCap, "EUR")}
     </p>
   )
 }
@@ -116,7 +116,7 @@ function ScreenRoute() {
 }
 
 function ScreenView({ screen }: { screen: SavedScreen }) {
-  const { zustand } = Route.useSearch()
+  const { state } = Route.useSearch()
   const navigate = useNavigate()
   const agent = useAgentPanel()
   useAgentContext(AGENT_CONTEXT)
@@ -150,10 +150,10 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
   const dismiss = (company: Company) => {
     setDismissed((current) => new Set(current).add(company.symbol))
     setPreviewOpen(false)
-    toast(`${company.symbol} verworfen`, {
-      description: "Taucht in diesem Screen nicht wieder auf.",
+    toast(`${company.symbol} dismissed`, {
+      description: "It won't show up in this screen again.",
       action: {
-        label: "Rückgängig",
+        label: "Undo",
         onClick: () =>
           setDismissed((current) => {
             const next = new Set(current)
@@ -164,11 +164,11 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
     })
   }
   const open = (company: Company) =>
-    void navigate({ to: "/aktie/$symbol", params: { symbol: company.symbol } })
+    void navigate({ to: "/stocks/$symbol", params: { symbol: company.symbol } })
 
-  const loading = zustand === "laden" || rerunning
-  const empty = zustand === "leer"
-  const failed = zustand === "fehler"
+  const loading = state === "loading" || rerunning
+  const empty = state === "empty"
+  const failed = state === "error"
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col px-8 pt-8 pb-16">
@@ -184,7 +184,7 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
             )}
             <DropdownMenu>
               <DropdownMenuTrigger render={<Button variant="plain" />}>
-                Spalten
+                Columns
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 {HIDEABLE.map((column) => (
@@ -209,11 +209,9 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
                 downloadCsv(`${screen.id}.csv`, toCsv(counted, CSV_COLUMNS))
               }
             >
-              Exportieren
+              Export
             </Button>
-            <Button onClick={() => toast("Screen gespeichert")}>
-              Speichern
-            </Button>
+            <Button onClick={() => toast("Screen saved")}>Save</Button>
           </>
         }
       />
@@ -246,21 +244,21 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
       <div className="mt-5 mb-2.5">
         <MetaLine
           rows={empty || failed ? [] : counted}
-          stale={zustand === "veraltet"}
+          stale={state === "stale"}
         />
       </div>
 
       {loading ? (
         <TableSkeleton />
       ) : failed ? (
-        <Message action={<Button variant="plain">Erneut versuchen</Button>}>
-          Yahoo antwortet gerade nicht. Der letzte Stand von {screen.updatedAt}{" "}
-          ist gespeichert.
+        <Message action={<Button variant="plain">Try again</Button>}>
+          Yahoo isn't answering right now. The last result from{" "}
+          {screen.updatedAt} is saved.
         </Message>
       ) : empty ? (
-        <Message action={<Button variant="plain">KGV-Filter entfernen</Button>}>
-          Kein Titel erfüllt alle Filter. Am engsten ist KGV &lt; 15; ohne
-          diesen Filter wären es 34 Treffer.
+        <Message action={<Button variant="plain">Remove P/E filter</Button>}>
+          No stock meets every filter. P/E &lt; 15 is the tightest; without it
+          there would be 34 hits.
         </Message>
       ) : (
         <ResultsTable
@@ -285,13 +283,13 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
 
       {dismissed.size > 0 && !loading && (
         <p className="mt-3 text-xs text-muted-foreground">
-          {dismissed.size} verworfen ·{" "}
+          {dismissed.size} dismissed ·{" "}
           <button
             type="button"
             className="underline underline-offset-3 hover:text-foreground"
             onClick={() => setShowDismissed((value) => !value)}
           >
-            {showDismissed ? "ausblenden" : "anzeigen"}
+            {showDismissed ? "hide" : "show"}
           </button>
         </p>
       )}
@@ -299,7 +297,7 @@ function ScreenView({ screen }: { screen: SavedScreen }) {
       <TrackDialog
         company={tracking}
         origin={
-          screen.id === "neu"
+          screen.id === "new"
             ? null
             : {
                 kind: "screen",

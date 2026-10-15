@@ -1,4 +1,4 @@
-// CSV for German Excel: semicolons, decimal commas, and a byte order mark so umlauts survive.
+// CSV for spreadsheets: commas, decimal points, and a byte order mark so accented names survive.
 export type CsvColumn<Row> = {
   header: string
   value: (row: Row) => string | number | null
@@ -6,7 +6,7 @@ export type CsvColumn<Row> = {
 
 const BYTE_ORDER_MARK = String.fromCharCode(0xfeff)
 
-const LOCALE_NUMBER = new Intl.NumberFormat("de-DE", {
+const LOCALE_NUMBER = new Intl.NumberFormat("en-GB", {
   useGrouping: false,
   maximumFractionDigits: 6,
 })
@@ -14,14 +14,14 @@ const LOCALE_NUMBER = new Intl.NumberFormat("de-DE", {
 function cell(value: string | number | null): string {
   if (value === null) return ""
   const text = typeof value === "number" ? LOCALE_NUMBER.format(value) : value
-  return /[";\n\r]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text
+  return /[",\n\r]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text
 }
 
 export function toCsv<Row>(rows: Row[], columns: CsvColumn<Row>[]): string {
   const lines = [
-    columns.map((column) => cell(column.header)).join(";"),
+    columns.map((column) => cell(column.header)).join(","),
     ...rows.map((row) =>
-      columns.map((column) => cell(column.value(row))).join(";")
+      columns.map((column) => cell(column.value(row))).join(",")
     ),
   ]
   return `${BYTE_ORDER_MARK}${lines.join("\r\n")}\r\n`

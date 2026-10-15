@@ -42,7 +42,7 @@ import {
 import type { StockEvent } from "@/prototype/fixtures/stock"
 
 const HEIGHT = 300
-const INTRADAY: Range[] = ["1T", "1W"]
+const INTRADAY: Range[] = ["1D", "1W"]
 
 /** Chart times hold Frankfurt wall-clock time as UTC; this turns one into a local date. */
 function wallDate(time: number): Date {
@@ -88,7 +88,7 @@ export function PriceChart({
   events: StockEvent[]
   loading?: boolean
 }) {
-  const [range, setRange] = useState<Range>("1J")
+  const [range, setRange] = useState<Range>("1Y")
   const points = rangeSeries(company, range)
   const change = rangeChange(points)
 
@@ -185,7 +185,7 @@ export function PriceChart({
         horzLine: { visible: false, labelVisible: false },
       },
       localization: {
-        locale: "de-DE",
+        locale: "en-GB",
         priceFormatter: (price: number) =>
           formatAxisPrice(price, company.currency),
       },
@@ -269,7 +269,7 @@ export function PriceChart({
 
   return (
     <section
-      aria-label="Kursverlauf"
+      aria-label="Price history"
       className="rounded-lg border border-input bg-card px-5 pt-3 pb-3"
     >
       <div className="flex items-center gap-6">
@@ -292,7 +292,7 @@ export function PriceChart({
         <div
           className="mt-3 h-[300px] rounded-md bg-muted/60"
           aria-busy="true"
-          aria-label="Chart lädt"
+          aria-label="Chart loading"
         />
       ) : (
         <div className="relative mt-3" style={{ height: HEIGHT }}>

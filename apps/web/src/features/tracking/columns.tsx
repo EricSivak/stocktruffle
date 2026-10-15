@@ -38,7 +38,7 @@ export const NUMERIC_COLUMNS = new Set(["price", "since", "signals"])
 export const columns = helper.columns([
   helper.display({
     id: "expand",
-    header: () => <span className="sr-only">Aufklappen</span>,
+    header: () => <span className="sr-only">Expand</span>,
     cell: () => (
       <ChevronRightIcon
         aria-hidden="true"
@@ -48,7 +48,7 @@ export const columns = helper.columns([
     ),
   }),
   helper.accessor("name", {
-    header: "Unternehmen",
+    header: "Company",
     sortFn: "alphanumeric",
     cell: ({ row }) => (
       <span className="flex items-baseline gap-2">
@@ -60,7 +60,7 @@ export const columns = helper.columns([
     ),
   }),
   helper.accessor("price", {
-    header: "Kurs",
+    header: "Price",
     cell: ({ row }) => (
       <span className="num">
         {formatPrice(row.original.price)}
@@ -71,11 +71,11 @@ export const columns = helper.columns([
     ),
   }),
   helper.accessor("since", {
-    header: "Seit Tracking",
+    header: "Since tracking",
     cell: ({ getValue }) => <Change value={getValue()} />,
   }),
   helper.accessor("trackedAt", {
-    header: "Getrackt am",
+    header: "Tracked on",
     sortFn: "alphanumeric",
     cell: ({ getValue }) => (
       <span className="tabular-nums">
@@ -85,7 +85,7 @@ export const columns = helper.columns([
   }),
   helper.display({
     id: "thesis",
-    header: "These",
+    header: "Thesis",
     cell: ({ row }) => (
       <span
         className={cn(
@@ -93,12 +93,12 @@ export const columns = helper.columns([
           "text-muted-foreground"
         )}
       >
-        {row.original.stock.thesis || "Noch kein Grund notiert"}
+        {row.original.stock.thesis || "No reason noted yet"}
       </span>
     ),
   }),
   helper.accessor("signals", {
-    header: "Signale",
+    header: "Signals",
     cell: ({ getValue }) => <span className="num">{getValue()}</span>,
   }),
 ])

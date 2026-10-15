@@ -28,10 +28,10 @@ import { useAccountEmail } from "@/lib/account"
 import { supabase } from "@/lib/supabase"
 
 const items = [
-  { to: "/", label: "Suche", icon: SearchIcon, exact: true },
+  { to: "/", label: "Search", icon: SearchIcon, exact: true },
   { to: "/screens", label: "Screens", icon: LayoutGridIcon, exact: false },
   { to: "/tracking", label: "Tracking", icon: TrendingUpIcon, exact: false },
-  { to: "/signale", label: "Signale", icon: BellIcon, exact: false },
+  { to: "/signals", label: "Signals", icon: BellIcon, exact: false },
 ] as const
 
 function useIsDark() {
@@ -48,12 +48,12 @@ export function NavRail() {
 
   return (
     <nav
-      aria-label="Hauptnavigation"
+      aria-label="Main navigation"
       className="flex w-16 shrink-0 flex-col items-center border-r py-4"
     >
       <Link
         to="/"
-        aria-label="stocktruffle, zur Startseite"
+        aria-label="stocktruffle, to the start page"
         className="rounded-full"
       >
         <LogoMark size={34} />
@@ -85,7 +85,7 @@ export function NavRail() {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                aria-label={isDark ? "Helles Design" : "Dunkles Design"}
+                aria-label={isDark ? "Light theme" : "Dark theme"}
                 onClick={() => setTheme(isDark ? "light" : "dark")}
               />
             }
@@ -97,7 +97,7 @@ export function NavRail() {
             )}
           </TooltipTrigger>
           <TooltipContent side="right">
-            {isDark ? "Helles Design" : "Dunkles Design"}
+            {isDark ? "Light theme" : "Dark theme"}
           </TooltipContent>
         </Tooltip>
 
@@ -106,7 +106,7 @@ export function NavRail() {
             render={
               <button
                 type="button"
-                aria-label="Konto"
+                aria-label="Account"
                 className="flex size-8 items-center justify-center rounded-full bg-muted text-xs font-medium text-foreground uppercase"
               />
             }
@@ -123,12 +123,12 @@ export function NavRail() {
               </>
             )}
             <DropdownMenuItem
-              onClick={() => void navigate({ to: "/einstellungen" })}
+              onClick={() => void navigate({ to: "/settings" })}
             >
-              Einstellungen
+              Settings
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => void supabase.auth.signOut()}>
-              Abmelden
+              Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

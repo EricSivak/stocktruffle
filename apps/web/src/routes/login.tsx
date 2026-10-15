@@ -22,20 +22,20 @@ export const Route = createFileRoute("/login")({
 
 function explain(error: AuthError): string {
   if (error.code === "invalid_credentials") {
-    return "E-Mail oder Passwort stimmt nicht."
+    return "Email or password is wrong."
   }
   if (error.code === "weak_password") {
-    return "Das Passwort braucht mindestens 8 Zeichen."
+    return "The password needs at least 8 characters."
   }
   if (error.code === "user_already_exists") {
-    return "Dieses Konto gibt es schon. Melde dich damit an."
+    return "This account already exists. Sign in with it."
   }
-  // The single-user hook answers in German already.
-  if (error.message.includes("bereits ein Konto")) return error.message
+  // The single-user hook explains itself.
+  if (error.message.includes("already has an account")) return error.message
   if (error.status === undefined || error.status === 0) {
-    return "Supabase ist nicht erreichbar. Läuft `npm run dev`?"
+    return "Supabase isn't reachable. Is `npm run dev` running?"
   }
-  return "Das hat nicht geklappt. Versuch es noch einmal."
+  return "That didn't work. Please try again."
 }
 
 function Login() {
@@ -74,7 +74,7 @@ function Login() {
       >
         <FieldGroup className="gap-4">
           <Field>
-            <FieldLabel htmlFor="email">E-Mail</FieldLabel>
+            <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
               id="email"
               name="email"
@@ -85,7 +85,7 @@ function Login() {
             />
           </Field>
           <Field data-invalid={error ? true : undefined}>
-            <FieldLabel htmlFor="password">Passwort</FieldLabel>
+            <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input
               id="password"
               name="password"
@@ -99,7 +99,7 @@ function Login() {
           </Field>
           <Field className="gap-2">
             <Button type="submit" disabled={pending !== null}>
-              {pending === "signin" ? "Anmelden …" : "Anmelden"}
+              {pending === "signin" ? "Signing in …" : "Sign in"}
             </Button>
             <Button
               type="button"
@@ -109,13 +109,13 @@ function Login() {
                 void submit(event.currentTarget.form!, "signup")
               }
             >
-              {pending === "signup" ? "Konto wird angelegt …" : "Konto anlegen"}
+              {pending === "signup" ? "Creating account …" : "Create account"}
             </Button>
           </Field>
         </FieldGroup>
       </form>
       <p className="mt-6 text-center text-xs text-muted-foreground">
-        Diese Installation hat genau ein Konto. Es bleibt auf deinem Rechner.
+        This installation has exactly one account. It stays on your computer.
       </p>
     </main>
   )

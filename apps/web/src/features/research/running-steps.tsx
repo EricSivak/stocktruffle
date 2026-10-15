@@ -52,7 +52,7 @@ export function RunningSteps({ onDone }: { onDone?: () => void }) {
       </ol>
       {done >= runningSteps.length && (
         <p className="text-xs text-muted-foreground">
-          Antwort folgt in Phase 3
+          Answer arrives in phase 3
         </p>
       )}
     </div>

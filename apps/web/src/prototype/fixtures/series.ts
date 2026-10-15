@@ -5,17 +5,17 @@ import { AS_OF_DATE, chartTime, tradingDays, YEAR_DAYS } from "./calendar"
 import type { Company } from "./companies"
 import { priceSeries, seeded } from "./random"
 
-export const RANGES = ["1T", "1W", "1M", "6M", "1J", "5J", "Max"] as const
+export const RANGES = ["1D", "1W", "1M", "6M", "1Y", "5Y", "Max"] as const
 export type Range = (typeof RANGES)[number]
 
-/** Spoken name of a period, for "1 Jahr +6,4 %". */
+/** Spoken name of a period, for "1 year +6.4%". */
 export const RANGE_LABELS: Record<Range, string> = {
-  "1T": "Heute",
-  "1W": "1 Woche",
-  "1M": "1 Monat",
-  "6M": "6 Monate",
-  "1J": "1 Jahr",
-  "5J": "5 Jahre",
+  "1D": "Today",
+  "1W": "1 week",
+  "1M": "1 month",
+  "6M": "6 months",
+  "1Y": "1 year",
+  "5Y": "5 years",
   Max: "Max",
 }
 
@@ -60,10 +60,10 @@ function build(company: Company, range: Range): Point[] {
     }))
 
   switch (range) {
-    case "1T":
+    case "1D":
       return session(seed, AS_OF_DATE, year.at(-2)!, year.at(-1)!, 5)
     case "1W": {
-      // The last day reuses the 1T path at half-hour steps, so both views agree.
+      // The last day reuses the 1D path at half-hour steps, so both views agree.
       const today = session(seed, AS_OF_DATE, year.at(-2)!, year.at(-1)!, 5)
       const lastDay = today.filter((_, i) => i % 6 === 0)
       const earlier = YEAR_DAYS.slice(-5, -1).flatMap((iso, i) =>
@@ -81,9 +81,9 @@ function build(company: Company, range: Range): Point[] {
       return days(21)
     case "6M":
       return days(125)
-    case "1J":
+    case "1Y":
       return days(YEAR_DAYS.length)
-    case "5J":
+    case "5Y":
     case "Max": {
       const before = HISTORY_YEARS * YEAR_DAYS.length
       const random = seeded(seed)
@@ -95,7 +95,7 @@ function build(company: Company, range: Range): Point[] {
         time: chartTime(iso),
         value: values[i],
       }))
-      if (range === "5J") return points.slice(-5 * YEAR_DAYS.length)
+      if (range === "5Y") return points.slice(-5 * YEAR_DAYS.length)
       // Weekly closes over the whole history, ending on the last day.
       return points.filter((_, i) => (points.length - 1 - i) % 5 === 0)
     }

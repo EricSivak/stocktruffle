@@ -58,7 +58,7 @@ function Token({
           className="self-start text-muted-foreground"
           onClick={onRemove}
         >
-          Filter entfernen
+          Remove filter
         </Button>
       </PopoverContent>
     </Popover>
@@ -75,11 +75,11 @@ function RulesToken({
   return (
     <Popover>
       <PopoverTrigger render={<button type="button" className={tokenClass} />}>
-        Meine Regeln
+        My rules
       </PopoverTrigger>
       <PopoverContent align="start" className="w-80 gap-3">
         <p className="text-xs text-muted-foreground">
-          Gelten für jeden Screen. Ändern unter Einstellungen.
+          Apply to every screen. Change them in settings.
         </p>
         <ul className="flex flex-col gap-2.5">
           {rules.map((rule) => (
@@ -118,9 +118,9 @@ function AddFilter({ onAdd }: { onAdd: (label: string) => void }) {
       </PopoverTrigger>
       <PopoverContent align="start" className="w-72 p-0">
         <Command>
-          <CommandInput placeholder="Kennzahl suchen" />
+          <CommandInput placeholder="Search metrics" />
           <CommandList className="max-h-72">
-            <CommandEmpty>Keine Kennzahl gefunden.</CommandEmpty>
+            <CommandEmpty>No metric found.</CommandEmpty>
             {catalog.map((group) => (
               <CommandGroup key={group.name} heading={group.name}>
                 {group.metrics.map((metric) => (

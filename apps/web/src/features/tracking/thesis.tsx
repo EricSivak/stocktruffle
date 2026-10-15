@@ -29,8 +29,8 @@ export function Thesis({
         autoFocus
         rows={2}
         value={draft}
-        aria-label="These"
-        placeholder="Günstig, weil …"
+        aria-label="Thesis"
+        placeholder="Cheap because …"
         onChange={(event) => setDraft(event.target.value)}
         onBlur={save}
         onKeyDown={(event) => {
@@ -51,7 +51,7 @@ export function Thesis({
   return (
     <button
       type="button"
-      title="These bearbeiten"
+      title="Edit thesis"
       onClick={() => setDraft(value)}
       className={cn(
         text,
@@ -60,7 +60,7 @@ export function Thesis({
         className
       )}
     >
-      {value || "Noch kein Grund notiert"}
+      {value || "No reason noted yet"}
     </button>
   )
 }

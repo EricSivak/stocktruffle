@@ -7,7 +7,7 @@ const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 
 if (!url || !publishableKey) {
   throw new Error(
-    "Supabase ist nicht konfiguriert. Im Projektordner `npm run env` ausführen und neu starten."
+    "Supabase is not configured. Run `npm run env` in the project folder and restart."
   )
 }
 

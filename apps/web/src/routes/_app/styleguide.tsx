@@ -34,17 +34,17 @@ export const Route = createFileRoute("/_app/styleguide")({
 })
 
 const SWATCHES = [
-  ["Papier", "bg-background"],
-  ["Feld", "bg-card"],
-  ["Auswahl", "bg-muted"],
-  ["Rand", "bg-border"],
-  ["Feldrand", "bg-input"],
-  ["Tinte", "bg-foreground"],
-  ["Grau", "bg-muted-foreground"],
-  ["Inaktiv", "bg-inactive"],
-  ["Trüffelgold", "bg-gold"],
-  ["Moos", "bg-gain"],
-  ["Terrakotta", "bg-loss"],
+  ["Paper", "bg-background"],
+  ["Field", "bg-card"],
+  ["Selection", "bg-muted"],
+  ["Border", "bg-border"],
+  ["Field border", "bg-input"],
+  ["Ink", "bg-foreground"],
+  ["Gray", "bg-muted-foreground"],
+  ["Inactive", "bg-inactive"],
+  ["Truffle gold", "bg-gold"],
+  ["Moss", "bg-gain"],
+  ["Terracotta", "bg-loss"],
 ] as const
 
 function Section({
@@ -66,7 +66,7 @@ function Specimen() {
   const rows = companies.slice(0, 3)
   return (
     <div className="flex flex-col gap-10 bg-background p-8 text-foreground">
-      <Section title="Farben">
+      <Section title="Colours">
         <div className="grid grid-cols-6 gap-3">
           {SWATCHES.map(([name, className]) => (
             <div key={name}>
@@ -77,21 +77,21 @@ function Specimen() {
         </div>
       </Section>
 
-      <Section title="Schrift">
+      <Section title="Type">
         <div className="flex flex-col gap-3">
-          <p className="title">Europa Small Caps</p>
-          <p className="text-[30px] font-medium tabular-nums">42,18 €</p>
+          <p className="title">Europe Small Caps</p>
+          <p className="text-[30px] font-medium tabular-nums">€42.18</p>
           <p className="max-w-md voice">
-            Der Markt preist das Ende eines Großauftrags 2027 ein. Die Marge ist
-            seit drei Quartalen stabil.
+            The market is pricing in the end of a major contract in 2027. The
+            margin has held steady for three quarters.
           </p>
           <p className="font-serif text-base italic">
-            Günstig, weil ein Großauftrag 2027 ausläuft.
+            Cheap because a major contract ends in 2027.
           </p>
           <p>
-            Oberfläche 13 px ·{" "}
+            Interface 13 px ·{" "}
             <span className="text-xs text-muted-foreground">
-              Metatext 12 px
+              Meta text 12 px
             </span>
           </p>
           <p className="tabular-nums">
@@ -111,46 +111,46 @@ function Specimen() {
         </div>
       </Section>
 
-      <Section title="Bedienung">
+      <Section title="Controls">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-5">
-            <Button>Speichern</Button>
-            <Button variant="plain">Exportieren</Button>
+            <Button>Save</Button>
+            <Button variant="plain">Export</Button>
             <Button
               variant="plain"
               onClick={() =>
-                toast("Screen gespeichert", {
-                  action: { label: "Rückgängig", onClick: () => undefined },
+                toast("Screen saved", {
+                  action: { label: "Undo", onClick: () => undefined },
                 })
               }
             >
-              Meldung zeigen
+              Show toast
             </Button>
           </div>
-          <Input placeholder="Interessant, wenn …" className="max-w-sm" />
+          <Input placeholder="Interesting when …" className="max-w-sm" />
           <FilterTokens
             tokens={screens[0].filters}
             onTokensChange={() => undefined}
             rules={rules}
             onToggleRule={() => undefined}
           />
-          <Tabs defaultValue="aktiv">
+          <Tabs defaultValue="active">
             <TabsList variant="line">
-              <TabsTrigger value="aktiv">Aktiv</TabsTrigger>
-              <TabsTrigger value="archiv">Archiv</TabsTrigger>
+              <TabsTrigger value="active">Active</TabsTrigger>
+              <TabsTrigger value="archive">Archive</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
       </Section>
 
-      <Section title="Tabelle">
+      <Section title="Table">
         <div className="overflow-hidden rounded-lg border border-input bg-card">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead className="pl-5">Unternehmen</TableHead>
-                <TableHead className="text-right">Heute</TableHead>
-                <TableHead className="text-right">1 Jahr</TableHead>
+                <TableHead className="pl-5">Company</TableHead>
+                <TableHead className="text-right">Today</TableHead>
+                <TableHead className="text-right">1 year</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -188,17 +188,17 @@ function Specimen() {
         </div>
       </Section>
 
-      <Section title="Zustände">
+      <Section title="States">
         <div className="flex flex-col gap-4">
           <TableSkeleton rows={3} />
           <p>
-            Kein Titel erfüllt alle Filter. Am engsten ist KGV &lt; 15; ohne
-            diesen Filter wären es 34 Treffer.{" "}
-            <Button variant="plain">KGV-Filter entfernen</Button>
+            No stock meets every filter. P/E &lt; 15 is the tightest; without it
+            there would be 34 hits.{" "}
+            <Button variant="plain">Remove P/E filter</Button>
           </p>
           <p className="text-xs text-muted-foreground">
-            Stand gestern, 17:35 ·{" "}
-            <span className="text-foreground underline">Aktualisieren</span>
+            As of yesterday, 17:35 ·{" "}
+            <span className="text-foreground underline">Refresh</span>
           </p>
         </div>
       </Section>
@@ -209,7 +209,7 @@ function Specimen() {
 function Styleguide() {
   return (
     <div className="px-8 pt-8 pb-16">
-      <PageHeader title="Styleguide" meta="nur in der Entwicklung" />
+      <PageHeader title="Styleguide" meta="development only" />
       <div className="mt-6 grid grid-cols-2 overflow-hidden rounded-lg border">
         <Specimen />
         <div className="dark border-l">

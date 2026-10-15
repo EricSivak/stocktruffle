@@ -1,8 +1,8 @@
 /** Shown wherever a value is unknown. Never 0: a missing number is not a zero. */
 export const MISSING = "–"
 
-const LOCALE = "de-DE"
-const NBSP = " "
+// British English: decimal point, comma thousands, day before month.
+const LOCALE = "en-GB"
 
 type Numeric = number | null | undefined
 
@@ -28,12 +28,7 @@ function withMinusSign(text: string): string {
   return text.replace("-", "−")
 }
 
-function currencySymbol(currency: string): string {
-  const parts = numberFormat({ style: "currency", currency }).formatToParts(0)
-  return parts.find((part) => part.type === "currency")?.value ?? currency
-}
-
-/** A plain number with German separators: 1234.5 becomes "1.234,5". */
+/** A plain number: 1234.5 becomes "1,234.5". */
 export function formatNumber(value: Numeric, fractionDigits = 2): string {
   if (isMissing(value)) return MISSING
   return withMinusSign(
@@ -44,14 +39,29 @@ export function formatNumber(value: Numeric, fractionDigits = 2): string {
   )
 }
 
-/** A price in its own currency: "42,18", or "42,18 €" when the currency is given. */
-export function formatPrice(value: Numeric, currency?: string): string {
-  if (isMissing(value)) return MISSING
-  const text = formatNumber(value, 2)
-  return currency ? text + NBSP + currencySymbol(currency) : text
+function formatMoney(
+  value: number,
+  currency: string,
+  minimumFractionDigits: number,
+  maximumFractionDigits: number
+): string {
+  return withMinusSign(
+    numberFormat({
+      style: "currency",
+      currency,
+      minimumFractionDigits,
+      maximumFractionDigits,
+    }).format(value)
+  )
 }
 
-/** A share of one as a percentage: 0.182 becomes "18,2 %", signed "+18,2 %". */
+/** A price in its own currency: "42.18", or "€42.18" and "SEK 118.40" with the currency. */
+export function formatPrice(value: Numeric, currency?: string): string {
+  if (isMissing(value)) return MISSING
+  return currency ? formatMoney(value, currency, 2, 2) : formatNumber(value, 2)
+}
+
+/** A share of one as a percentage: 0.182 becomes "18.2%", signed "+18.2%". */
 export function formatPercent(
   value: Numeric,
   options: { signed?: boolean; fractionDigits?: number } = {}
@@ -68,24 +78,25 @@ export function formatPercent(
   )
 }
 
+// Financial-press units: €1.2bn, €850m. Intl's compact notation would write "B".
 const UNITS = [
-  { size: 1e12, label: "Bio" },
-  { size: 1e9, label: "Mrd" },
-  { size: 1e6, label: "Mio" },
-  { size: 1e3, label: "Tsd" },
+  { size: 1e12, label: "tn" },
+  { size: 1e9, label: "bn" },
+  { size: 1e6, label: "m" },
+  { size: 1e3, label: "k" },
 ] as const
 
-/** A large amount in German short form: 1 234 000 000 becomes "1,2 Mrd". */
+/** A large amount in short form: 1 234 000 000 becomes "1.2bn", or "€1.2bn". */
 export function formatCompact(value: Numeric, currency?: string): string {
   if (isMissing(value)) return MISSING
-  // 0.9995 of a unit already rounds up to "1,0" of it, so 999,95 Mio reads as 1,0 Mrd.
+  // 0.9995 of a unit already rounds up to "1.0" of it, so 999.95m reads as 1.0bn.
   const unit = UNITS.find(({ size }) => Math.abs(value) >= size * 0.9995)
   const scaled = unit ? value / unit.size : value
   const fractionDigits = unit && Math.abs(scaled) < 99.95 ? 1 : 0
-  const parts = [formatNumber(scaled, fractionDigits)]
-  if (unit) parts.push(unit.label)
-  if (currency) parts.push(currencySymbol(currency))
-  return parts.join(NBSP)
+  const amount = currency
+    ? formatMoney(scaled, currency, fractionDigits, fractionDigits)
+    : formatNumber(scaled, fractionDigits)
+  return unit ? amount + unit.label : amount
 }
 
 const DATE_ONLY = /^(\d{4})-(\d{2})-(\d{2})$/
@@ -111,7 +122,7 @@ const dayMonthYear = new Intl.DateTimeFormat(LOCALE, {
   year: "numeric",
 })
 
-/** A date as "02.09.", or "02.09.2026" when the year matters. */
+/** A date as "02/09", or "02/09/2026" when the year matters. */
 export function formatDate(
   value: Date | string | null | undefined,
   options: { year?: boolean } = {}
@@ -122,13 +133,12 @@ export function formatDate(
   return (options.year ? dayMonthYear : dayMonth).format(date)
 }
 
-/** A price on a chart axis: as few decimals as the tick needs, "40 €" or "42,5 €". */
+/** A price on a chart axis: as few decimals as the tick needs, "€40" or "€42.5". */
 export function formatAxisPrice(value: Numeric, currency?: string): string {
   if (isMissing(value)) return MISSING
-  const text = withMinusSign(
-    numberFormat({ maximumFractionDigits: 2 }).format(value)
-  )
-  return currency ? text + NBSP + currencySymbol(currency) : text
+  return currency
+    ? formatMoney(value, currency, 0, 2)
+    : withMinusSign(numberFormat({ maximumFractionDigits: 2 }).format(value))
 }
 
 const hourMinute = new Intl.DateTimeFormat(LOCALE, {
@@ -142,37 +152,35 @@ export function formatTime(value: Date | null | undefined): string {
   return hourMinute.format(value)
 }
 
-// Three letters without a dot, as on a chart axis; Intl writes "Jan." and "Juni".
+// Three letters, as on a chart axis; Intl writes "Sept" in British English.
 const MONTHS = [
   "Jan",
   "Feb",
-  "Mär",
+  "Mar",
   "Apr",
-  "Mai",
+  "May",
   "Jun",
   "Jul",
   "Aug",
   "Sep",
-  "Okt",
+  "Oct",
   "Nov",
-  "Dez",
+  "Dec",
 ]
 
-/** A month as a short axis label: "Mär". */
+/** A month as a short axis label: "Mar". */
 export function formatMonth(value: Date): string {
   return MONTHS[value.getMonth()]
 }
 
-/** How long something took: "1 Min 40", or "40 Sek" under a minute. */
+/** How long something took: "1m 40s", "2m", or "40s" under a minute. */
 export function formatDuration(seconds: Numeric): string {
   if (isMissing(seconds)) return MISSING
   const whole = Math.round(seconds)
   const minutes = Math.floor(whole / 60)
   const rest = whole % 60
-  if (minutes === 0) return `${rest}${NBSP}Sek`
-  return rest === 0
-    ? `${minutes}${NBSP}Min`
-    : `${minutes}${NBSP}Min ${String(rest).padStart(2, "0")}`
+  if (minutes === 0) return `${rest}s`
+  return rest === 0 ? `${minutes}m` : `${minutes}m ${rest}s`
 }
 
 /** A running clock: "0:04", "1:40". */

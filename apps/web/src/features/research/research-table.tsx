@@ -39,11 +39,11 @@ export function ResearchTable({ rows }: { rows: ResearchRow[] }) {
     <Table>
       <TableHeader>
         <TableRow className="hover:bg-transparent">
-          <TableHead className="pl-0">Unternehmen</TableHead>
-          <TableHead className="text-right">Marktkap.</TableHead>
-          <TableHead className="pl-8">Rüstungsanteil</TableHead>
-          <TableHead className="text-right">Auftragsbestand</TableHead>
-          <TableHead className="pr-0 text-right">Seit Jahresbeginn</TableHead>
+          <TableHead className="pl-0">Company</TableHead>
+          <TableHead className="text-right">Market cap</TableHead>
+          <TableHead className="pl-8">Defence share</TableHead>
+          <TableHead className="text-right">Backlog</TableHead>
+          <TableHead className="pr-0 text-right">YTD</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -56,7 +56,7 @@ export function ResearchTable({ rows }: { rows: ResearchRow[] }) {
               className="cursor-default"
               onClick={() =>
                 void navigate({
-                  to: "/aktie/$symbol",
+                  to: "/stocks/$symbol",
                   params: { symbol: row.symbol },
                 })
               }
@@ -76,7 +76,7 @@ export function ResearchTable({ rows }: { rows: ResearchRow[] }) {
                 <ShareBar share={row.defenceShare} />
               </TableCell>
               <TableCell className="text-right tabular-nums">
-                {formatNumber(row.backlog, 1)} × Umsatz
+                {formatNumber(row.backlog, 1)}× revenue
               </TableCell>
               <TableCell className="pr-0 text-right">
                 <Change

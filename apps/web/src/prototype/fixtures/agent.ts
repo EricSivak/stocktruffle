@@ -11,28 +11,28 @@ export type ThreadItem =
 export const screenThread: ThreadItem[] = [
   {
     kind: "question",
-    text: "Wirf Finanzwerte raus und sortier nach Wachstum.",
+    text: "Drop financials and sort by growth.",
   },
-  { kind: "steps", text: "Screen angepasst · 2 Änderungen", undoable: true },
-  { kind: "question", text: "Warum ist Nordwind so günstig?" },
-  { kind: "steps", text: "Kennzahlen geladen · 4 Quellen gelesen" },
+  { kind: "steps", text: "Screen changed · 2 edits", undoable: true },
+  { kind: "question", text: "Why is Nordwind so cheap?" },
+  { kind: "steps", text: "Figures loaded · 4 sources read" },
   {
     kind: "answer",
     parts: [
-      "Der Markt preist das Ende eines Großauftrags 2027 ein.",
+      "The market is pricing in the end of a major contract in 2027.",
       { footnote: 1 },
-      " Die Marge ist seit drei Quartalen stabil,",
+      " The margin has held steady for three quarters,",
       { footnote: 2 },
-      " und das Management hat die Prognose im August bestätigt.",
+      " and management confirmed its guidance in August.",
       { footnote: 3 },
     ],
   },
   {
     kind: "sources",
     items: [
-      { n: 1, title: "Branchenbericht", detail: "12.09.2026" },
-      { n: 2, title: "Quartalsbericht Q2" },
-      { n: 3, title: "Pressemitteilung", detail: "07.08.2026" },
+      { n: 1, title: "Industry report", detail: "12/09/2026" },
+      { n: 2, title: "Q2 quarterly report" },
+      { n: 3, title: "Press release", detail: "07/08/2026" },
     ],
   },
 ]

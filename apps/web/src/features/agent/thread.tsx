@@ -46,9 +46,9 @@ export function StepLine({
           <button
             type="button"
             className="underline underline-offset-3 hover:text-foreground"
-            onClick={() => toast("Änderung zurückgenommen")}
+            onClick={() => toast("Change undone")}
           >
-            Rückgängig
+            Undo
           </button>
         </>
       )}
@@ -74,7 +74,7 @@ function Footnote({
           onSelect ? (
             <button
               type="button"
-              aria-label={`Quelle ${n}`}
+              aria-label={`Source ${n}`}
               onClick={() => onSelect(n)}
               className={cn(SUP, "align-super hover:text-foreground")}
             />
@@ -88,7 +88,7 @@ function Footnote({
       <TooltipContent>
         {source
           ? [source.title, source.detail].filter(Boolean).join(", ")
-          : `Quelle ${n}`}
+          : `Source ${n}`}
       </TooltipContent>
     </Tooltip>
   )

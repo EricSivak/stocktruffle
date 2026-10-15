@@ -17,8 +17,8 @@ import type { Origin } from "@/prototype/fixtures/tracking"
 import { tracking } from "@/prototype/tracking-store"
 
 const SUGGESTIONS = [
-  "Interessant, wenn das KGV unter 10 fällt",
-  "Interessant, wenn Insider kaufen",
+  "Interesting when the P/E falls below 10",
+  "Interesting when insiders buy",
 ]
 
 /** Track a stock: the thesis is optional, signals can be picked from suggestions. */
@@ -51,9 +51,9 @@ export function TrackDialog({
               })
               onClose()
               setPicked([])
-              toast(`${company.name} wird getrackt`, {
+              toast(`Tracking ${company.name}`, {
                 action: {
-                  label: "Zum Tracking",
+                  label: "Go to tracking",
                   onClick: () => void navigate({ to: "/tracking" }),
                 },
               })
@@ -61,7 +61,7 @@ export function TrackDialog({
           >
             <DialogHeader>
               <DialogTitle className="text-[15px] font-medium">
-                Tracken
+                Track
               </DialogTitle>
               <DialogDescription>
                 {company.name} <span className="text-xs">{company.symbol}</span>
@@ -69,18 +69,18 @@ export function TrackDialog({
             </DialogHeader>
             <label className="flex flex-col gap-1.5">
               <span className="text-xs text-muted-foreground">
-                Warum? (optional)
+                Why? (optional)
               </span>
               <Textarea
                 name="thesis"
                 rows={3}
-                placeholder="Günstig, weil …"
+                placeholder="Cheap because …"
                 className="font-serif text-[15px]"
               />
             </label>
             <div className="flex flex-col gap-1.5">
               <span className="text-xs text-muted-foreground">
-                Signale (werden noch nicht geprüft)
+                Signals (not checked yet)
               </span>
               <ul className="flex flex-col gap-1">
                 {SUGGESTIONS.map((suggestion) => (
@@ -106,9 +106,9 @@ export function TrackDialog({
             </div>
             <DialogFooter className="mx-0 mb-0 items-center gap-5 border-0 p-0">
               <Button variant="plain" type="button" onClick={onClose}>
-                Abbrechen
+                Cancel
               </Button>
-              <Button type="submit">Tracken</Button>
+              <Button type="submit">Track</Button>
             </DialogFooter>
           </form>
         )}

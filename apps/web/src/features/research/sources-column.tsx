@@ -32,14 +32,14 @@ export function SourcesColumn({
         id="sources"
         className="flex items-baseline gap-2 pb-3 text-[15px] font-medium"
       >
-        Quellen
+        Sources
         <span className="text-sm font-normal text-muted-foreground tabular-nums">
           {sources.length || ""}
         </span>
       </h2>
       {sources.length === 0 ? (
         <p className="border-t pt-3 text-muted-foreground">
-          Quellen erscheinen hier, sobald die Recherche sie liest.
+          Sources appear here as the research reads them.
         </p>
       ) : (
         <div className="border-t">
@@ -60,9 +60,7 @@ export function SourcesColumn({
                 </div>
               </CollapsibleContent>
               <CollapsibleTrigger className="mt-3 text-foreground underline decoration-1 underline-offset-4 hover:decoration-2">
-                {open
-                  ? "Weniger Quellen anzeigen"
-                  : `Weitere ${rest} Quellen anzeigen`}
+                {open ? "Show fewer sources" : `Show ${rest} more sources`}
               </CollapsibleTrigger>
             </Collapsible>
           )}

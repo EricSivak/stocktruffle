@@ -23,27 +23,27 @@ const plain = (text: string) => text.replace(/\s/gu, " ")
 describe("stock page (mockup 04)", () => {
   it("shows today's change in euros and percent", () => {
     const change = nordwind.price - nordwind.price / (1 + nordwind.dayChange)
-    expect(plain(formatPrice(change, "EUR"))).toBe("−2,60 €")
+    expect(plain(formatPrice(change, "EUR"))).toBe("−€2.60")
     expect(plain(formatPercent(nordwind.dayChange, { signed: true }))).toBe(
-      "−5,8 %"
+      "−5.8%"
     )
   })
 
   it("agrees between the periods of the chart", () => {
-    expect(rangeChange(rangeSeries(nordwind, "1J"))).toBeCloseTo(0.064, 10)
-    expect(rangeChange(rangeSeries(nordwind, "1T"))).toBeCloseTo(-0.058, 10)
-    for (const range of ["1T", "1W", "1M", "6M", "1J", "5J", "Max"] as const) {
+    expect(rangeChange(rangeSeries(nordwind, "1Y"))).toBeCloseTo(0.064, 10)
+    expect(rangeChange(rangeSeries(nordwind, "1D"))).toBeCloseTo(-0.058, 10)
+    for (const range of ["1D", "1W", "1M", "6M", "1Y", "5Y", "Max"] as const) {
       expect(rangeSeries(nordwind, range).at(-1)?.value).toBeCloseTo(42.18, 10)
     }
     expect(
-      rangeSeries(nordwind, "5J")
+      rangeSeries(nordwind, "5Y")
         .slice(-250)
         .map((point) => point.value)
     ).toEqual(nordwind.year)
   })
 
   it("keeps chart times in order", () => {
-    for (const range of ["1T", "1W", "5J", "Max"] as const) {
+    for (const range of ["1D", "1W", "5Y", "Max"] as const) {
       const times = rangeSeries(nordwind, range).map((point) => point.time)
       expect(times).toEqual([...times].sort((a, b) => a - b))
       expect(new Set(times).size).toBe(times.length)
@@ -72,11 +72,11 @@ describe("tracking (mockup 05)", () => {
       ])
     )
     expect(since).toEqual({
-      "NWT.DE": "+6,4 %",
-      "HBG.DE": "−3,1 %",
-      "SBG.ST": "+12,9 %",
-      "ALM.PA": "+1,2 %",
-      "LKS.HE": "−0,8 %",
+      "NWT.DE": "+6.4%",
+      "HBG.DE": "−3.1%",
+      "SBG.ST": "+12.9%",
+      "ALM.PA": "+1.2%",
+      "LKS.HE": "−0.8%",
     })
   })
 

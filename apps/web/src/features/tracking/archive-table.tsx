@@ -21,12 +21,12 @@ export function ArchiveTable({ stocks }: { stocks: ArchivedStock[] }) {
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
-            <TableHead className="pl-5">Unternehmen</TableHead>
-            <TableHead>Getrackt am</TableHead>
-            <TableHead>Archiviert am</TableHead>
-            <TableHead className="text-right">Während Tracking</TableHead>
-            <TableHead className="text-right">Seitdem</TableHead>
-            <TableHead className="pl-8">Grund</TableHead>
+            <TableHead className="pl-5">Company</TableHead>
+            <TableHead>Tracked on</TableHead>
+            <TableHead>Archived on</TableHead>
+            <TableHead className="text-right">While tracked</TableHead>
+            <TableHead className="text-right">Since</TableHead>
+            <TableHead className="pl-8">Reason</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -38,7 +38,7 @@ export function ArchiveTable({ stocks }: { stocks: ArchivedStock[] }) {
                 className="cursor-default"
                 onClick={() =>
                   void navigate({
-                    to: "/aktie/$symbol",
+                    to: "/stocks/$symbol",
                     params: { symbol: stock.symbol },
                   })
                 }

@@ -6,7 +6,7 @@ export function NewsList({ items }: { items: NewsItem[] }) {
   return (
     <section aria-labelledby="news">
       <h2 id="news" className="border-b pb-2 text-[15px] font-medium">
-        Nachrichten
+        News
       </h2>
       {items.length ? (
         <ul className="divide-y">
@@ -21,7 +21,7 @@ export function NewsList({ items }: { items: NewsItem[] }) {
         </ul>
       ) : (
         <p className="py-3 text-muted-foreground">
-          Keine Nachrichten in den letzten 30 Tagen.
+          No news in the last 30 days.
         </p>
       )}
     </section>

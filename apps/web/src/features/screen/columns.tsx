@@ -39,7 +39,7 @@ export const NUMERIC_COLUMNS = new Set([
 
 export const columns = helper.columns([
   helper.accessor("name", {
-    header: "Unternehmen",
+    header: "Company",
     sortFn: "alphanumeric",
     enableHiding: false,
     cell: ({ row }) => (
@@ -52,7 +52,7 @@ export const columns = helper.columns([
     ),
   }),
   helper.accessor("price", {
-    header: "Kurs",
+    header: "Price",
     cell: ({ row }) => (
       <span className="num">
         {formatPrice(row.original.price)}
@@ -63,33 +63,33 @@ export const columns = helper.columns([
     ),
   }),
   helper.accessor("dayChange", {
-    header: "Heute",
+    header: "Today",
     cell: ({ getValue }) => <Change value={getValue()} />,
   }),
   helper.accessor("marketCapEur", {
-    header: "Marktkap.",
+    header: "Market cap",
     cell: ({ getValue }) => (
       <span className="num">{formatCompact(getValue(), "EUR")}</span>
     ),
   }),
   helper.accessor("pe", {
-    header: "KGV",
+    header: "P/E",
     cell: ({ getValue }) => (
       <span className="num">{formatNumber(getValue(), 1)}</span>
     ),
   }),
   helper.accessor("revenueGrowth", {
-    header: "Umsatz Δ",
+    header: "Revenue Δ",
     cell: ({ getValue }) => <Change value={getValue()} />,
   }),
   helper.accessor("netMargin", {
-    header: "Nettomarge",
+    header: "Net margin",
     cell: ({ getValue }) => (
       <span className="num">{formatPercent(getValue())}</span>
     ),
   }),
   helper.accessor("yearChange", {
-    header: "1 Jahr",
+    header: "1 year",
     cell: ({ row }) => (
       <Sparkline
         values={row.original.year}
@@ -102,14 +102,14 @@ export const columns = helper.columns([
 
 /** Columns written to the CSV export, with raw numbers instead of formatted text. */
 export const CSV_COLUMNS = [
-  { header: "Unternehmen", value: (row: Company) => row.name },
+  { header: "Company", value: (row: Company) => row.name },
   { header: "Ticker", value: (row: Company) => row.symbol },
-  { header: "Kurs", value: (row: Company) => row.price },
-  { header: "Währung", value: (row: Company) => row.currency },
-  { header: "Heute", value: (row: Company) => row.dayChange },
-  { header: "Marktkap. (EUR)", value: (row: Company) => row.marketCapEur },
-  { header: "KGV", value: (row: Company) => row.pe },
-  { header: "Umsatzwachstum", value: (row: Company) => row.revenueGrowth },
-  { header: "Nettomarge", value: (row: Company) => row.netMargin },
-  { header: "1 Jahr", value: (row: Company) => row.yearChange },
+  { header: "Price", value: (row: Company) => row.price },
+  { header: "Currency", value: (row: Company) => row.currency },
+  { header: "Today", value: (row: Company) => row.dayChange },
+  { header: "Market cap (EUR)", value: (row: Company) => row.marketCapEur },
+  { header: "P/E", value: (row: Company) => row.pe },
+  { header: "Revenue growth", value: (row: Company) => row.revenueGrowth },
+  { header: "Net margin", value: (row: Company) => row.netMargin },
+  { header: "1 year", value: (row: Company) => row.yearChange },
 ]

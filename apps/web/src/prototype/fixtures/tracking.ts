@@ -4,7 +4,7 @@ import { ARCHIVED, TRACKED_SINCE } from "./anchors"
 import { yearIndex } from "./calendar"
 import { companyBySymbol } from "./companies"
 
-export type Rhythm = "täglich" | "wöchentlich" | "nach Quartalszahlen"
+export type Rhythm = "daily" | "weekly" | "after earnings"
 
 export type Signal = { id: string; text: string; rhythm: Rhythm }
 
@@ -43,9 +43,9 @@ export function closeOn(symbol: string, iso: string): number {
 
 const SCREEN_ORIGIN = (date: string): Origin => ({
   kind: "screen",
-  title: "Europa Small Caps",
+  title: "Europe Small Caps",
   date,
-  to: { screenId: "europa-small-caps" },
+  to: { screenId: "europe-small-caps" },
 })
 
 const details: Record<
@@ -53,42 +53,42 @@ const details: Record<
   Omit<TrackedStock, "symbol" | "trackedAt" | "trackedPrice">
 > = {
   "NWT.DE": {
-    thesis: "Günstig, weil ein Großauftrag 2027 ausläuft. Die Marge hält.",
+    thesis: "Cheap because a major contract ends in 2027. The margin holds.",
     origin: SCREEN_ORIGIN("2026-09-02"),
     signals: [
       {
         id: "s1",
-        text: "Interessant, wenn das KGV unter 10 fällt",
-        rhythm: "täglich",
+        text: "Interesting when the P/E falls below 10",
+        rhythm: "daily",
       },
     ],
   },
   "HBG.DE": {
-    thesis: "Günstig bewertet, aber der Neubau hängt an den Zinsen.",
+    thesis: "Cheaply valued, but new building depends on interest rates.",
     origin: {
       kind: "research",
-      title: "Bauträger nach der Zinswende",
+      title: "Developers after the rate turn",
       date: "2026-08-21",
     },
     signals: [
       {
         id: "s2",
-        text: "Interessant, wenn die Hypothekenzinsen sinken",
-        rhythm: "wöchentlich",
+        text: "Interesting when mortgage rates fall",
+        rhythm: "weekly",
       },
       {
         id: "s3",
-        text: "Auftragseingang dreht ins Plus",
-        rhythm: "nach Quartalszahlen",
+        text: "Order intake turns positive",
+        rhythm: "after earnings",
       },
     ],
   },
   "SBG.ST": { thesis: "", origin: SCREEN_ORIGIN("2026-07-14"), signals: [] },
   "ALM.PA": {
-    thesis: "Messtechnik für Windparks, hohe Marge.",
+    thesis: "Measuring equipment for wind farms, high margin.",
     origin: SCREEN_ORIGIN("2026-09-30"),
     signals: [
-      { id: "s4", text: "Interessant, wenn Insider kaufen", rhythm: "täglich" },
+      { id: "s4", text: "Interesting when insiders buy", rhythm: "daily" },
     ],
   },
   "LKS.HE": { thesis: "", origin: null, signals: [] },
@@ -104,8 +104,8 @@ export const trackedStocks: TrackedStock[] = TRACKED_SINCE.map(
 )
 
 const reasons: Record<string, string> = {
-  "TRS.MC": "These hat sich nicht bestätigt",
-  "BRN.VI": "Kursziel erreicht",
+  "TRS.MC": "Thesis did not hold",
+  "BRN.VI": "Price target reached",
 }
 
 export const archivedStocks: ArchivedStock[] = ARCHIVED.map((entry) => ({
@@ -119,10 +119,10 @@ export const archivedStocks: ArchivedStock[] = ARCHIVED.map((entry) => ({
 
 /** Signal ideas offered under the input, per stock; the rest get the general ones. */
 const suggestions: Record<string, string[]> = {
-  "HBG.DE": ["Baugenehmigungen steigen", "Insiderkäufe"],
-  "NWT.DE": ["Neuer Großauftrag", "Insiderkäufe"],
+  "HBG.DE": ["Building permits rise", "Insider buying"],
+  "NWT.DE": ["New major contract", "Insider buying"],
 }
 
 export function signalSuggestions(symbol: string): string[] {
-  return suggestions[symbol] ?? ["KGV fällt unter 10", "Insiderkäufe"]
+  return suggestions[symbol] ?? ["P/E falls below 10", "Insider buying"]
 }

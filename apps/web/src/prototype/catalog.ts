@@ -5,57 +5,57 @@ export type CatalogGroup = { name: string; metrics: CatalogMetric[] }
 
 export const catalog: CatalogGroup[] = [
   {
-    name: "Bewertung",
+    name: "Valuation",
     metrics: [
-      { id: "pe", label: "KGV" },
-      { id: "forward-pe", label: "KGV erwartet" },
-      { id: "pb", label: "Kurs-Buchwert-Verhältnis" },
+      { id: "pe", label: "P/E" },
+      { id: "forward-pe", label: "Forward P/E" },
+      { id: "pb", label: "Price to book" },
       { id: "ev-ebitda", label: "EV/EBITDA" },
       { id: "peg", label: "PEG" },
     ],
   },
   {
-    name: "Wachstum",
+    name: "Growth",
     metrics: [
-      { id: "revenue-growth", label: "Umsatzwachstum", unit: "%" },
-      { id: "eps-growth", label: "Gewinnwachstum je Aktie", unit: "%" },
-      { id: "ebitda-growth", label: "EBITDA-Wachstum", unit: "%" },
-      { id: "fcf-growth", label: "Free-Cashflow-Wachstum", unit: "%" },
+      { id: "revenue-growth", label: "Revenue growth", unit: "%" },
+      { id: "eps-growth", label: "EPS growth", unit: "%" },
+      { id: "ebitda-growth", label: "EBITDA growth", unit: "%" },
+      { id: "fcf-growth", label: "Free cash flow growth", unit: "%" },
     ],
   },
   {
-    name: "Qualität",
+    name: "Quality",
     metrics: [
-      { id: "net-margin", label: "Nettomarge", unit: "%" },
-      { id: "gross-margin", label: "Bruttomarge", unit: "%" },
-      { id: "roe", label: "Eigenkapitalrendite", unit: "%" },
-      { id: "debt-ebitda", label: "Verschuldung/EBITDA" },
-      { id: "current-ratio", label: "Liquidität 2. Grades" },
+      { id: "net-margin", label: "Net margin", unit: "%" },
+      { id: "gross-margin", label: "Gross margin", unit: "%" },
+      { id: "roe", label: "Return on equity", unit: "%" },
+      { id: "debt-ebitda", label: "Debt/EBITDA" },
+      { id: "current-ratio", label: "Quick ratio" },
     ],
   },
   {
-    name: "Dividende",
+    name: "Dividend",
     metrics: [
-      { id: "dividend-yield", label: "Dividendenrendite", unit: "%" },
-      { id: "dividend-years", label: "Jahre mit steigender Dividende" },
-      { id: "payout", label: "Ausschüttungsquote", unit: "%" },
+      { id: "dividend-yield", label: "Dividend yield", unit: "%" },
+      { id: "dividend-years", label: "Years of rising dividends" },
+      { id: "payout", label: "Payout ratio", unit: "%" },
     ],
   },
   {
     name: "Momentum",
     metrics: [
-      { id: "change-1y", label: "Kursveränderung 1 Jahr", unit: "%" },
-      { id: "from-high", label: "Abstand zum 52-Wochen-Hoch", unit: "%" },
-      { id: "short-interest", label: "Leerverkaufsquote", unit: "%" },
+      { id: "change-1y", label: "Price change 1 year", unit: "%" },
+      { id: "from-high", label: "Distance to 52-week high", unit: "%" },
+      { id: "short-interest", label: "Short interest", unit: "%" },
     ],
   },
   {
-    name: "Unternehmen",
+    name: "Company",
     metrics: [
       { id: "region", label: "Region" },
-      { id: "country", label: "Land" },
-      { id: "sector", label: "Sektor" },
-      { id: "market-cap", label: "Marktkapitalisierung" },
+      { id: "country", label: "Country" },
+      { id: "sector", label: "Sector" },
+      { id: "market-cap", label: "Market cap" },
     ],
   },
 ]

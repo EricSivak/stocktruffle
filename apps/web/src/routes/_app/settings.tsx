@@ -2,17 +2,17 @@ import { createFileRoute } from "@tanstack/react-router"
 
 import { ComingSoon } from "@/components/coming-soon"
 
-export const Route = createFileRoute("/_app/einstellungen")({
+export const Route = createFileRoute("/_app/settings")({
   component: Settings,
 })
 
-// The chart library's licence asks for a visible credit with a link; it moves into "Über"
+// The chart library's licence asks for a visible credit with a link; it moves into "About"
 // when this page is built.
 function Settings() {
   return (
-    <ComingSoon title="Einstellungen" step={9}>
+    <ComingSoon title="Settings" step={9}>
       <p className="mt-10 border-t pt-4 text-xs text-muted-foreground">
-        Kurs-Charts: TradingView Lightweight Charts™, Copyright (c) 2025
+        Price charts: TradingView Lightweight Charts™, Copyright (c) 2025
         TradingView, Inc.,{" "}
         <a
           href="https://www.tradingview.com/"
@@ -22,7 +22,7 @@ function Settings() {
         >
           tradingview.com
         </a>
-        . Kursdaten über Yahoo Finance (yfinance), nur für privaten Gebrauch.
+        . Market data from Yahoo Finance (yfinance), for personal use only.
       </p>
     </ComingSoon>
   )

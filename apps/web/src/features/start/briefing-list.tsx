@@ -15,7 +15,7 @@ function Target({
     "flex items-baseline gap-6 border-b py-3 hover:[&>span:first-child]:underline hover:[&>span:first-child]:underline-offset-4"
   return item.to.kind === "stock" ? (
     <Link
-      to="/aktie/$symbol"
+      to="/stocks/$symbol"
       params={{ symbol: item.to.symbol }}
       className={className}
     >
@@ -43,7 +43,7 @@ export function BriefingList({
   return (
     <section aria-labelledby="briefing" className={cn("border-t", className)}>
       <h2 id="briefing" className="border-b py-3 font-medium">
-        Seit gestern
+        Since yesterday
       </h2>
       <ul>
         {items.map((item) => (

@@ -23,16 +23,14 @@ import { stockDetails } from "@/prototype/fixtures/stock"
 import { signalSuggestions } from "@/prototype/fixtures/tracking"
 import { tracking, useTracking } from "@/prototype/tracking-store"
 
-type StockState = "chart-laden" | "keine-nachrichten"
-const STATES: StockState[] = ["chart-laden", "keine-nachrichten"]
+type StockState = "chart-loading" | "no-news"
+const STATES: StockState[] = ["chart-loading", "no-news"]
 
-export const Route = createFileRoute("/_app/aktie/$symbol")({
-  // ?zustand=… shows the loading chart and the empty news; only for review in development.
-  validateSearch: (
-    search: Record<string, unknown>
-  ): { zustand?: StockState } =>
-    import.meta.env.DEV && STATES.includes(search.zustand as StockState)
-      ? { zustand: search.zustand as StockState }
+export const Route = createFileRoute("/_app/stocks/$symbol")({
+  // ?state=… shows the loading chart and the empty news; only for review in development.
+  validateSearch: (search: Record<string, unknown>): { state?: StockState } =>
+    import.meta.env.DEV && STATES.includes(search.state as StockState)
+      ? { state: search.state as StockState }
       : {},
   loader: ({ params }) => {
     const company = companyBySymbol(params.symbol)
@@ -48,7 +46,7 @@ function StockRoute() {
   return <StockPage key={company.symbol} company={company} />
 }
 
-/** "−2,60 € (−5,8 %)": today's move in money and percent, coloured by direction. */
+/** "−€2.60 (−5.8%)": today's move in money and percent, coloured by direction. */
 function DayChange({ company }: { company: Company }) {
   const amount = company.price - company.price / (1 + company.dayChange)
   const sign = amount > 0 ? "+" : ""
@@ -69,7 +67,7 @@ function DayChange({ company }: { company: Company }) {
 }
 
 function StockPage({ company }: { company: Company }) {
-  const { zustand } = Route.useSearch()
+  const { state } = Route.useSearch()
   const navigate = useNavigate()
   const agent = useAgentPanel()
   const details = stockDetails(company)
@@ -81,9 +79,9 @@ function StockPage({ company }: { company: Company }) {
 
   const agentContext = useMemo(
     () => ({
-      label: `sieht ${company.name}`,
+      label: `sees ${company.name}`,
       thread: askedWhy ? details.why : [],
-      placeholder: `Frag zu ${company.name}`,
+      placeholder: `Ask about ${company.name}`,
     }),
     [company.name, askedWhy, details.why]
   )
@@ -93,7 +91,7 @@ function StockPage({ company }: { company: Company }) {
   const events = useMemo(
     () => [
       ...details.events,
-      ...(tracked ? [{ date: tracked.trackedAt, label: "Getrackt" }] : []),
+      ...(tracked ? [{ date: tracked.trackedAt, label: "Tracked" }] : []),
     ],
     [details.events, tracked]
   )
@@ -117,17 +115,17 @@ function StockPage({ company }: { company: Company }) {
                 agent.setOpen(true)
               }}
             >
-              Warum bewegt sich das?
+              Why is it moving?
             </Button>
             {tracked ? (
               <Button
                 variant="plain"
                 onClick={() => void navigate({ to: "/tracking" })}
               >
-                Im Tracking
+                Tracked
               </Button>
             ) : (
-              <Button onClick={() => setTrackOpen(true)}>Tracken</Button>
+              <Button onClick={() => setTrackOpen(true)}>Track</Button>
             )}
           </>
         }
@@ -139,7 +137,7 @@ function StockPage({ company }: { company: Company }) {
         </span>
         <DayChange company={company} />
         <span className="text-xs text-muted-foreground">
-          heute, {AS_OF_TIME}
+          today, {AS_OF_TIME}
         </span>
       </p>
 
@@ -147,7 +145,7 @@ function StockPage({ company }: { company: Company }) {
         <PriceChart
           company={company}
           events={events}
-          loading={zustand === "chart-laden"}
+          loading={state === "chart-loading"}
         />
       </div>
 
@@ -157,7 +155,7 @@ function StockPage({ company }: { company: Company }) {
 
         <section aria-labelledby="thesis">
           <h2 id="thesis" className="border-b pb-2 text-[15px] font-medium">
-            These
+            Thesis
           </h2>
           {tracked ? (
             <div className="mt-3 flex flex-col gap-6">
@@ -174,10 +172,10 @@ function StockPage({ company }: { company: Company }) {
               />
             </div>
           ) : (
-            <p className="py-3 text-muted-foreground">Noch nicht getrackt.</p>
+            <p className="py-3 text-muted-foreground">Not tracked yet.</p>
           )}
         </section>
-        <NewsList items={zustand === "keine-nachrichten" ? [] : details.news} />
+        <NewsList items={state === "no-news" ? [] : details.news} />
       </div>
 
       <TrackDialog

@@ -79,7 +79,7 @@ export const tracking = {
       signals: signals.map((text) => ({
         id: `new-${nextId++}`,
         text,
-        rhythm: "täglich",
+        rhythm: "daily",
       })),
     }
     set({ ...state, active: [...state.active, stock] })
@@ -124,7 +124,7 @@ export const tracking = {
   setThesis: (symbol: string, thesis: string) =>
     updateStock(symbol, (stock) => ({ ...stock, thesis })),
 
-  addSignal: (symbol: string, text: string, rhythm: Rhythm = "täglich") =>
+  addSignal: (symbol: string, text: string, rhythm: Rhythm = "daily") =>
     updateStock(symbol, (stock) => ({
       ...stock,
       signals: [...stock.signals, { id: `new-${nextId++}`, text, rhythm }],
